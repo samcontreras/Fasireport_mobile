@@ -1,0 +1,430 @@
+<div class="row justify-content-center align-items-center mt-5">
+            <form novalidate action="http://localhost/fasireport/panel_usuarios/panel_usuarios/recuperar_pass.php" class=" card nav_color_transparencia rounded-lg sombra mobile_div  col-6 mr-5 ml-5 mt-5 mb-5" method="POST" id="recuperar_form" autocomplete="off">
+                            <div class="card-header">
+                    <h2 class="card-tittle text-center text-white">Recuperar cuenta</h2>
+                                    </div>
+                        <div  class="card-body"  id="recuperar_form_body">
+                            <div class="campo form input-group-lg mt-2" id="div_emailrecuperar_form" >
+
+            
+                                <input  onkeyup="mayus_activada(event)" autocomplete="" style="height: 5.25em;" type="email" class="form-control input-lg" placeholder=" " required name="email" id="emailrecuperar_form" >
+                                            <label for="E-mail" class="label-name" id='E-mail_label'>
+                    <span class="content-name"  id="E-mail"> E-mail </span>
+                </label>
+                <div class="invalid-feedback content-name">
+                    <span class="mt-5">Escribi tu email</span>
+                </div>
+                <div class="aviso ml-5 content-name">
+                    <span class="text-center d-none mayus mt-5 ">Tenes las mayusculas activadas</span>
+                </div>
+            </div>
+                            <div>
+                            <input type="hidden" name="tipo" id="tiporecuperar_form" value="recuperar" required readonly>
+                        </div>
+                                <div>
+                            <input type="hidden" name="token" id="token_recuperar_form" value="b320590c08674e5b0a199a1b8f66f02bc2fdb1720a7e1fd56392ee6bdf3fe3858ad386386fee28b7bc13be3c78f926bde71194a483c2662438e086d9c07781068e21" required readonly>
+                        </div>
+            </div>
+                            <div class="card-footer">
+                    <button type="submit" id="recuperar_form_submit" class="btn buttons-white"><i class="fas fa-arrow-circle-right mr-1"></i> Enviar </button>
+                                            <button id="recuperar_form_reset" class="btn buttons-red ml-1"> <i class="fas fa-trash mr-1"> </i> Limpiar </button>
+                    
+                </div>
+            
+        </form>
+
+                    <script>
+                        function mayus_activada(event) {
+        var mayus = event.getModifierState && event.getModifierState( 'CapsLock' );
+        if (mayus == true) {
+        $('.mayus').removeClass('d-none');
+        } else {
+        $('.mayus').addClass('d-none');
+        }
+        }
+                $('#recuperar_form_reset').click(function(elemento) {
+                    try {
+                        if (elemento.hasOwnProperty('originalEvent') && elemento.originalEvent.isTrusted == true) {
+                            
+        HoldOn.open({
+        theme:'sk-cube-grid',
+        backgroundColor:"rgba(0, 0, 0, 0.93)",
+        message:'Hay una ventana abierta, para continuar cerrarla'
+        });
+        $('nav').addClass('z_index_menor');
+            var lobibox = Lobibox.confirm({
+        draggable: true,
+        icon: true,
+        iconSource: 'fontAwesome',
+        title: '¿Vas a resetear el formulario?',
+        msg: '¿Vas a resetear el formulario?',
+        buttons: {
+        si: {
+        text: 'Si',
+        closeOnClick: true,
+        class : 'btn buttons-white'
+        },
+        no: {
+        text: 'No',
+        closeOnClick: true,
+        class : 'btn buttons-white'
+        }
+        },
+        callback: function ($this, type, ev) {
+        if(type == 'si'){
+        limpiar(elemento)        }
+        }
+        });
+        $('.lobibox').css("z-index", "999999999999");
+            setTimeout(() => {
+        $(".btn-close").click(function(){
+        HoldOn.close();
+        $('nav').removeClass('z_index_menor');
+        });
+                    $(".lobibox-footer > button").click(function(){
+            HoldOn.close();
+            $('nav').removeClass('z_index_menor');
+            });
+                  lobibox_holdon = true;
+        }, 0500);
+                                    trusted = false;
+                        } else {
+                           error('') ;
+                        }
+                    } catch (error_ex) {
+                        error(error_ex);
+                    }
+                });
+                                function limpiar(elemento) {
+                    try {
+                        if (elemento.originalEvent.isTrusted == true) {
+                            elemento.target.parentElement.parentElement.reset();
+                            $('.select').val({}).trigger('change');
+                            $('.label-name').removeClass('validado');
+                        }
+                    } catch (error_ex) {
+                        error(error_ex);
+                    }
+                }
+                                var trusted = false;
+
+                document.getElementById('recuperar_form_submit').addEventListener("click", event => trusted = event.isTrusted);
+
+                $("#recuperar_form").submit(function(evento) {
+                    try {
+                        evento.preventDefault();
+                        if (trusted == true) {
+                            var form = $("#recuperar_form")[0];
+                            var closest_form = $(this).closest('form');
+                            if (form.checkValidity() === false) {
+                                form.classList.add('was-validated');
+                                var selects = closest_form.find('.select');
+                                $.each(selects, function(indexInArray, valueOfElement) {
+                                    valueOfElement.children[0].classList.add('mt-3');
+                                });
+                                var hijos_select = selects.parent().find('.label-name');
+                                $.each(hijos_select, function(indexInArray, valueOfElement) {
+                                    if (valueOfElement.classList.contains('validado') == false) {
+                                        valueOfElement.classList.add('required');
+                                        if (valueOfElement.classList.contains('display_validacion')) {
+                                            valueOfElement.children[0].classList.remove('d-none');
+                                        }
+                                    }
+                                });
+                                closest_form.find('[required]').parent().find('.label-name').addClass('required');
+                            } else {
+                                closest_form.find('[required]').parent().find('.label-name').removeClass('required');
+                                form.classList.remove('was-validated');
+                                $('#recuperar_form_submit').prop('disabled', true);
+                                var formData = new FormData(form);
+                                
+           $.ajax({
+           type:'POST',
+           url: 'panel_usuarios/recuperar_pass.php',data:formData,contentType: false,
+                                        processData: false, 
+    success: function(data) { ajaxresponse(data); setTimeout(function(){
+                                         $('#recuperar_form_submit').prop('disabled', false); 
+                                        }, 2000);  
+    },error: function (err) {
+           error(err)
+},});                            }
+                        }
+                    } catch (error_ex) {
+                        error(error_ex);
+                    }
+                });
+            </script>
+                <form novalidate action="http://localhost/fasireport/panel_usuarios/panel_usuarios/recuperar_pass.php" class=" card nav_color_transparencia rounded-lg sombra mobile_div  col-6 mr-5 ml-5 mt-5 mb-5 d-none" method="POST" id="recuperar_pass_form" autocomplete="off">
+                            <div class="card-header">
+                    <h2 class="card-tittle text-center text-white">Recuperar cuenta</h2>
+                                    </div>
+                        <div  class="card-body"  id="recuperar_pass_form_body">
+                            <div class="campo form input-group-lg mt-2" id="div_emailrecuperar_pass_form" >
+
+            
+                                <input  onkeyup="mayus_activada(event)" autocomplete="" style="height: 5.25em;" type="email" class="form-control input-lg" placeholder=" " required name="email" id="emailrecuperar_pass_form" >
+                                            <label for="E-mail" class="label-name" id='E-mail_label'>
+                    <span class="content-name"  id="E-mail"> E-mail </span>
+                </label>
+                <div class="invalid-feedback content-name">
+                    <span class="mt-5">Escribi tu email</span>
+                </div>
+                <div class="aviso ml-5 content-name">
+                    <span class="text-center d-none mayus mt-5 ">Tenes las mayusculas activadas</span>
+                </div>
+            </div>
+                            <div>
+                            <input type="hidden" name="tipo" id="tiporecuperar_pass_form" value="cambiar_pass" required readonly>
+                        </div>
+                            <div class="campo form input-group-lg mt-2" id="div_tokenrecuperar_pass_form" >
+
+            
+                                <input  onkeyup="mayus_activada(event)" autocomplete="" style="height: 5.25em;" type="text" class="form-control input-lg" placeholder=" " required name="token" id="tokenrecuperar_pass_form" >
+                                            <label for="Token" class="label-name" id='Token_label'>
+                    <span class="content-name"  id="Token"> Token </span>
+                </label>
+                <div class="invalid-feedback content-name">
+                    <span class="mt-5">Escribi el token que te mandamos por e-mail</span>
+                </div>
+                <div class="aviso ml-5 content-name">
+                    <span class="text-center d-none mayus mt-5 ">Tenes las mayusculas activadas</span>
+                </div>
+            </div>
+                <div class="campo form input-group-lg mt-2" id="div_passrecuperar_pass_form" >
+
+            
+                                <input  onkeyup="mayus_activada(event)" autocomplete="" style="height: 5.25em;" type="password" class="form-control input-lg" placeholder=" " required name="pass" id="passrecuperar_pass_form" >
+                                            <label for="Contraseña" class="label-name" id='Contraseña_label'>
+                    <span class="content-name"  id="Contraseña"> Contraseña </span>
+                </label>
+                <div class="invalid-feedback content-name">
+                    <span class="mt-5">Escribi tu contraseña</span>
+                </div>
+                <div class="aviso ml-5 content-name">
+                    <span class="text-center d-none mayus mt-5 ">Tenes las mayusculas activadas</span>
+                </div>
+            </div>
+            <span id="cambiar_passrecuperar_pass_form" onclick="cambiar_pass('passrecuperar_pass_form',this)" class='mostrar_pass buttons-green bg-transparent mr-2'> <i class="far fa-eye ml-1 mt-1"></i> </span>
+        <script id="borrar_script_pass_append">
+            $("#div_passrecuperar_pass_form").append($("#cambiar_passrecuperar_pass_form"));
+            setTimeout(() => {
+                $('#borrar_script_pass_append').remove();
+            }, 2000);
+        </script>
+        <script>
+               function cambiar_pass(id, elemento) {
+                    try {
+                        var pass_input = $('#' + id)[0].type;
+                        if (pass_input == 'password') {
+                            $('#' + id)[0].type = 'text';
+                            $('#' + elemento.id).html('<i class="fas fa-eye-slash ml-1 mt-1"></i>');
+                        } else {
+                            $('#' + id)[0].type = 'password';
+                            $('#' + elemento.id).html('<i class="far fa-eye ml-1 mt-1"></i>');
+                        }
+                    } catch (error_ex) {
+                        error(error_ex);
+                    }
+                }
+        </script>
+                    <div>
+                            <input type="hidden" name="token" id="token_recuperar_pass_form" value="386d364a432e4a47382984e504a9f15950f6561c66771114e1b53bd630e8bea28af960104592b8a4e6eeab6483b754cb16940843c0e29996ea982577e29224fc2337" required readonly>
+                        </div>
+            </div>
+                            <div class="card-footer">
+                    <button type="submit" id="recuperar_pass_form_submit" class="btn buttons-white"><i class="fas fa-arrow-circle-right mr-1"></i> Enviar </button>
+                                            <button id="recuperar_pass_form_reset" class="btn buttons-red ml-1"> <i class="fas fa-trash mr-1"> </i> Limpiar </button>
+                    
+                </div>
+            
+        </form>
+
+                    <script>
+                        function mayus_activada(event) {
+        var mayus = event.getModifierState && event.getModifierState( 'CapsLock' );
+        if (mayus == true) {
+        $('.mayus').removeClass('d-none');
+        } else {
+        $('.mayus').addClass('d-none');
+        }
+        }
+                $('#recuperar_pass_form_reset').click(function(elemento) {
+                    try {
+                        if (elemento.hasOwnProperty('originalEvent') && elemento.originalEvent.isTrusted == true) {
+                            
+        HoldOn.open({
+        theme:'sk-cube-grid',
+        backgroundColor:"rgba(0, 0, 0, 0.93)",
+        message:'Hay una ventana abierta, para continuar cerrarla'
+        });
+        $('nav').addClass('z_index_menor');
+            var lobibox = Lobibox.confirm({
+        draggable: true,
+        icon: true,
+        iconSource: 'fontAwesome',
+        title: '¿Vas a resetear el formulario?',
+        msg: '¿Vas a resetear el formulario?',
+        buttons: {
+        si: {
+        text: 'Si',
+        closeOnClick: true,
+        class : 'btn buttons-white'
+        },
+        no: {
+        text: 'No',
+        closeOnClick: true,
+        class : 'btn buttons-white'
+        }
+        },
+        callback: function ($this, type, ev) {
+        if(type == 'si'){
+        limpiar(elemento)        }
+        }
+        });
+        $('.lobibox').css("z-index", "999999999999");
+            setTimeout(() => {
+        $(".btn-close").click(function(){
+        HoldOn.close();
+        $('nav').removeClass('z_index_menor');
+        });
+                    $(".lobibox-footer > button").click(function(){
+            HoldOn.close();
+            $('nav').removeClass('z_index_menor');
+            });
+                  lobibox_holdon = true;
+        }, 0500);
+                                    trusted = false;
+                        } else {
+                           error('') ;
+                        }
+                    } catch (error_ex) {
+                        error(error_ex);
+                    }
+                });
+                                function limpiar(elemento) {
+                    try {
+                        if (elemento.originalEvent.isTrusted == true) {
+                            elemento.target.parentElement.parentElement.reset();
+                            $('.select').val({}).trigger('change');
+                            $('.label-name').removeClass('validado');
+                        }
+                    } catch (error_ex) {
+                        error(error_ex);
+                    }
+                }
+                                var trusted = false;
+
+                document.getElementById('recuperar_pass_form_submit').addEventListener("click", event => trusted = event.isTrusted);
+
+                $("#recuperar_pass_form").submit(function(evento) {
+                    try {
+                        evento.preventDefault();
+                        if (trusted == true) {
+                            var form = $("#recuperar_pass_form")[0];
+                            var closest_form = $(this).closest('form');
+                            if (form.checkValidity() === false) {
+                                form.classList.add('was-validated');
+                                var selects = closest_form.find('.select');
+                                $.each(selects, function(indexInArray, valueOfElement) {
+                                    valueOfElement.children[0].classList.add('mt-3');
+                                });
+                                var hijos_select = selects.parent().find('.label-name');
+                                $.each(hijos_select, function(indexInArray, valueOfElement) {
+                                    if (valueOfElement.classList.contains('validado') == false) {
+                                        valueOfElement.classList.add('required');
+                                        if (valueOfElement.classList.contains('display_validacion')) {
+                                            valueOfElement.children[0].classList.remove('d-none');
+                                        }
+                                    }
+                                });
+                                closest_form.find('[required]').parent().find('.label-name').addClass('required');
+                            } else {
+                                closest_form.find('[required]').parent().find('.label-name').removeClass('required');
+                                form.classList.remove('was-validated');
+                                $('#recuperar_pass_form_submit').prop('disabled', true);
+                                var formData = new FormData(form);
+                                
+           $.ajax({
+           type:'POST',
+           url: 'panel_usuarios/recuperar_pass.php',data:formData,contentType: false,
+                                        processData: false, 
+    success: function(data) { ajaxresponse(data); setTimeout(function(){
+                                         $('#recuperar_pass_form_submit').prop('disabled', false); 
+                                        }, 2000);  
+    },error: function (err) {
+           error(err)
+},});                            }
+                        }
+                    } catch (error_ex) {
+                        error(error_ex);
+                    }
+                });
+            </script>
+        </div>
+<script>
+    try {
+        var card_recuperar = document.getElementById('recuperar_form');
+        var card_recuperar_pass = document.getElementById('recuperar_pass_form');
+    } catch (error_ex) {
+            error(error_ex);
+        }
+
+    function ajaxresponse(data) {
+        try {
+            mensaje(data.estado, data.titulo, data.mensaje);
+            if (data.estado == 'success') {
+                if (data.tipo == 0) {
+                    avatar_to_form(card_recuperar_pass);
+                    card_recuperar.classList.add('d-none');
+                    card_recuperar_pass.classList.remove('d-none');
+                } else {
+                    cargar_pagina('panel_usuarios/Login');
+                }
+
+            }
+        } catch (error_ex) {
+            error(error_ex);
+        }
+    }
+
+    function avatar_to_form(card_form) {
+        try {
+            var card_header = card_form.children[0];
+            if (card_header.children[0].classList.contains('mt-4') == false) {
+                card_header.children[0].classList.add('mt-4')
+            }
+            card_header.append(avatar);
+        } catch (error_ex) {
+            error(error_ex);
+        }
+    }
+
+    avatar_to_form(card_recuperar);
+
+    $(window).resize(function(evento) {
+        try {
+            if (evento.originalEvent.isTrusted == true) {
+                var width = $(window).width();
+                var cols = $('form');
+                if (width > 1100 && width < 1500) {
+                    cols.addClass('col-4');
+                    cols.removeClass('col-10');
+                    cols.addClass('ml-5');
+                    cols.addClass('mr-5');
+                }
+                if (width < 1100) {
+                    cols.removeClass('col-4');
+                    cols.addClass('col-10');
+                    cols.addClass('ml-5');
+                } else if (width > 1500) {
+                    cols.removeClass('col-10');
+                    cols.removeClass('mr-5');
+                    cols.removeClass('ml-5');
+                    cols.addClass('col-4');
+                }
+            }
+        } catch (error_ex) {
+            error(error_ex);
+        }
+    });
+</script>

@@ -1,14 +1,12 @@
 <html lang="es">
 
-
-<!-- Mirrored from localhost/fasireport/ by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 12 Jun 2021 22:26:07 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" 
 <head>
     <meta http-equiv=”Content-Type” content=”text/html; charset=ISO-8859-1″ />
     <meta name="keywords" content="reportes,español,ingles,redes sociales, social media">
     <meta name="author" content="Gonzalo Hernan Alvarez, Matias Ortiz, Carlos Riveiros y Samuel Contreras">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script data-ad-client="ca-pub-7510774500762229" async src="../../pagead2.googlesyndication.com/pagead/js/f.txt"></script>
+    <script data-ad-client="ca-pub-7510774500762229" async src="../../pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="shortcut icon" href="imagenes/icono.ico">
     <meta property="og:description" content="Nuestro objetivo es desarrollar, mejorar e implementar un sistema de reportes a medida, fácil, rápido y seguro, adaptado según las necesidades de cada empresa y/o negocio, guardando una copia local en el servidor de las ultimas consultas en caso de que ocurra algún problema y se le cierre el navegador.
@@ -66,12 +64,7 @@
 <b>Notice</b>:  Undefined index: panel_usuarios/Login in <b>C:\xampp\htdocs\Fasireport\index.php</b> on line <b>84</b><br />
 "> <i class="fas fa-sign-in-alt"></i>Iniciar sesion</a>
                         </li>
-                                            <li id='2_nav_li' class="nav-item">
-                            <a class="nav-link item text-white navbar-index" href="#" onclick="cargar_pagina('quienes_somos')" id="Quienes somos"> <i class="fas fa-users"></i>Quienes somos</a>
-                        </li>
-                                            <li id='3_nav_li' class="nav-item">
-                            <a class="nav-link item text-white navbar-index" href="#" onclick="cargar_pagina('piercing')" id="Piercing"> <i class="fas fa-cart-plus"></i>Piercing</a>
-                        </li>
+            
                                             <li id='4_nav_li' class="nav-item">
                             <a class="nav-link item text-white navbar-index" href="#" onclick="cargar_pagina('Politicas-de-privacidad')" id="Politicas de privacidad"> <i class="fas fa-user-lock"></i>Politicas de privacidad</a>
                         </li>
@@ -129,7 +122,7 @@
                             mensaje(data.estado, data.titulo, data.mensaje);
                             if (data.estado == 'success') {
                                 setTimeout(() => {
-                                    window.location = 'index-2.html';
+                                    window.location = 'index.html';
                                 }, 2500);
                             }
                         } catch (error_ex) {
@@ -231,7 +224,7 @@
     <div class="card-footer row navbar navbar-expand-sm mb-4 mt-4 ml-4 mr-4 toolbar HORIZONTAL_SCROLL_NAV" id="toolbar">
         <h1 class="text-white  h1 " id="titulo_h1"> Inicio </h1>
         <div class="d-none" id="toolbar_botones">
-            <a class="ml-3 btn buttons-white" href="index-2.html" id="Inicio"> <i class="fas fa-home"></i> Inicio </a>
+            <a class="ml-3 btn buttons-white" href="index.html" id="Inicio"> <i class="fas fa-home"></i> Inicio </a>
         </div>
     </div>
 
@@ -331,7 +324,7 @@
                             if(data.estado == 'error'){
                              mensaje(data.estado,data.titulo,data.mensaje);
                             setTimeout(() => {
-                                window.location='index-2.html';
+                                window.location='index.html';
                             }, 1600);
                             } else {
 
@@ -370,7 +363,7 @@
                         $('#Id_pagina').html('');
                     });
                 } else {
-                    window.location = 'index-2.html';
+                    window.location = 'index.html';
                 }
             } catch (error_ex) {
                 $('#Id_pagina').html('');
@@ -440,7 +433,7 @@
         },
         callback: function ($this, type, ev) {
         if(type == 'si'){
-        window.location = 'index-2.html';        }
+        window.location = 'index.html';        }
         }
         });
         $('.lobibox').css("z-index", "999999999999");
@@ -567,13 +560,13 @@
     <footer class="page-footer nav_color_transparencia mt-5 text-white ">
         <div class="d-flex flex-row justify-content-center align-items-center" style="height:5em">
             <div class="p-2">
-                <a class='icono' href="https://www.facebook.com/Fasireport-108417064716611" target="_blank"> <i class="fab fa-facebook fa-3x"></i> </a>
+                <a class='icono' href="../../www.facebook.com/Fasireport-108417064716611.html" target="_blank"> <i class="fab fa-facebook fa-3x"></i> </a>
             </div>
             <div class="p-2">
                 <a class="icono" href="#" target="_blank"> <i class="fab fa-twitter fa-3x"></i> </a>
             </div>
             <div class="p-2">
-                <a class="icono" href="https://www.youtube.com/channel/UCeUhsY6sOBbBH6Nh1HIiA0A" target="_blank"> <i class="fab fa-youtube fa-3x"></i> </a>
+                <a class="icono" href="../../www.youtube.com/channel/UCeUhsY6sOBbBH6Nh1HIiA0A.html" target="_blank"> <i class="fab fa-youtube fa-3x"></i> </a>
             </div>
             <div class="p-2">
                 <a class="icono" href="#" target="_blank"> <i class="fab fa-instagram fa-3x"></i> </a>
@@ -587,4 +580,4 @@
             <strong>
                  Parece que no tenes activo Javascript,activalo la pagina web lo necesita para su buen funcionamiento            </strong>
         </div>
-        <script type="text/javascript">window.location.href="index-2.html";</script><noscript><meta http-equiv="refresh" content="0;url=index-2.html" /></noscript>
+        <script type="text/javascript">window.location.href="index.html";</script><noscript><meta http-equiv="refresh" content="0;url=index.html" /></noscript>
