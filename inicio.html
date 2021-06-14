@@ -1,0 +1,117 @@
+<div class="video_inicio">
+    <iframe class="video" src="https://www.youtube.com/embed/DM9NjDEQs7U" title="Video introductorio" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<div class="inicio mt-5" id="inicio_div">
+        <div id="accordion_inicio">
+            <div class="card nav_color_transparencia rounded-lg sombra">
+                <div class="card-header">
+                    <a class="buttons-white btn-block text-center" data-toggle="collapse" id="1" href="#item_1">
+                        Objetivo general                    </a>
+                </div>
+                <div id="item_1" class="collapse show" data-parent="#accordion_inicio">
+                    <div class="card-body vertical_scroll">
+                        <p>
+                            Nuestro objetivo es desarrollar, mejorar e implementar un sistema de reportes a medida, fácil, rápido y seguro, adaptado según las necesidades de cada empresa y/o negocio, guardando una copia local en el servidor de las ultimas consultas en caso de que ocurra algún problema y se le cierre el navegador.
+         Que a su vez permita conocer y estudiar la gestión de la producción de cada cliente de manera individual determinando de esta manera si los procesos mas eficientes y productivos.
+         Que el usuario pueda conocer en tiempo real a través de un análisis predictivo de distintas fuentes de datos para obtener la evaluación de riesgos de su negocio                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card nav_color_transparencia rounded-lg sombra">
+                <div class="card-header">
+                    <a class="buttons-white btn-block text-center" data-toggle="collapse" id="2" href="#item_2">
+                        ¿Que integra nuestro sistema?                    </a>
+                </div>
+                <div id="item_2" class="collapse " data-parent="#accordion_inicio">
+                    <div class="card-body vertical_scroll">
+                        <p>
+                            Nuestro sistema integra tanto sus redes sociales, como sistema de google admob (publicidad) y sistema financieros como lo es nosis y un apartado donde puede consultar el cambio actualizado a la fecha.                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card nav_color_transparencia rounded-lg sombra">
+                <div class="card-header">
+                    <a class="buttons-white btn-block text-center" data-toggle="collapse" id="3" href="#item_3">
+                        Tipos de usuarios                    </a>
+                </div>
+                <div id="item_3" class="collapse " data-parent="#accordion_inicio">
+                    <div class="card-body vertical_scroll">
+                        <p>
+                            El usuario puede elegir entre una modalidad gratuita con acceso a ciertos módulos del sistema y puede expandir las funcionalidades pagando una cuota mensual dependiendo el plan que mas se adapte a sus necesidades                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card nav_color_transparencia rounded-lg sombra">
+                <div class="card-header">
+                    <a class="buttons-white btn-block text-center" data-toggle="collapse" id="4" href="#item_4">
+                        Tipos de reportes                    </a>
+                </div>
+                <div id="item_4" class="collapse " data-parent="#accordion_inicio">
+                    <div class="card-body vertical_scroll">
+                        <p>
+                            Una de las funcionalidades principales es la creación de reportes a medida. Puede enviarle la información de un modulo especifico y cargar los datos deseados del mismo y el sistema le generara un reporte en formato pdf                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card nav_color_transparencia rounded-lg sombra">
+                <div class="card-header">
+                    <a class="buttons-white btn-block text-center" data-toggle="collapse" id="5" href="#item_5">
+                        Confidencialidad y privacidad                    </a>
+                </div>
+                <div id="item_5" class="collapse " data-parent="#accordion_inicio">
+                    <div class="card-body vertical_scroll">
+                        <p>
+                            El sistema no guarda ningún tipo de credencial ni de sus redes sociales, bases de datos, etc. Usted puede elegir que datos quiere guardar u eliminar en cualquier momento, a lo que nadie mas tendrá acceso a dicha información.                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card nav_color_transparencia rounded-lg sombra">
+                <div class="card-header">
+                    <a class="buttons-white btn-block text-center" data-toggle="collapse" id="6" href="#item_6">
+                        Versión mobile                    </a>
+                </div>
+                <div id="item_6" class="collapse " data-parent="#accordion_inicio">
+                    <div class="card-body vertical_scroll">
+                        <p>
+                            Puede acceder a sus reportes en cualquier momento desde su celular                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="ml-5">
+        <img class="rounded img-fluid mb-3" src="imagenes/Plantilla2.png" alt="foto del accordion" id="foto_acordion">
+        <a class="buttons-white text-center w-75 mt-1 piercing" onclick='cargar_pagina("piercing")'> Piercing </a>
+    </div>
+
+</div>
+<script>
+    try {
+        var collapse = $('div > .collapse');
+        collapse.on('hidden.bs.collapse', function() {
+            var item = collapse.eq(0);
+            item.collapse('show');
+
+        })
+    } catch (error_ex) {
+        error(error_ex);
+    }
+    var foto = $('#foto_acordion');
+    $(window).resize(function () { 
+        try {
+            var width = $(window).width();
+            if(width < 1200){
+             foto.addClass('h-25 w-25');
+            } else{
+               foto.removeClass('h-25 w-25');
+            }
+        } catch (error_ex) {
+        error(error_ex);
+    }
+    });
+</script>
