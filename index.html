@@ -23,7 +23,7 @@
     <script type="text/javascript" src="https://fastireport.000webhostapp.com/js/Chart.bundle.js"></script>
     <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/Chart.min.css">
 
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://fastireport.000webhostapp.com/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/select2.min.css">
@@ -64,9 +64,7 @@
                 </li>
                 <li id='1_nav_li' class="nav-item">
                     <a class="nav-link item text-white navbar-index" href="#"
-                        onclick="cargar_pagina('panel_usuarios/Login')" id="<br />
-    <b>Notice</b>:  Undefined index: panel_usuarios/Login in <b>/storage/ssd4/355/15602355/public_html/index.php</b> on line <b>84</b><br />
-    "> <i class="fas fa-sign-in-alt"></i>Iniciar sesion</a>
+                        onclick="cargar_pagina('panel_usuarios/Login')" id='iniciar_session'> <i class="fas fa-sign-in-alt"></i>Iniciar sesion</a>
                 </li>
                 <li id='2_nav_li' class="nav-item">
                     <a class="nav-link item text-white navbar-index" href="#" onclick="cargar_pagina('quienes_somos')"
@@ -151,7 +149,6 @@
                         $('#falta_cantidad').remove();
                         try {
                             if (ejecutado == false) {
-
                                 $.ajax({
                                     type: 'GET',
                                     url: 'https://fastireport.000webhostapp.com/privilejios.php?buscar=true',
@@ -242,7 +239,7 @@
     <div class="card-footer row navbar navbar-expand-sm mb-4 mt-4 ml-4 mr-4 toolbar HORIZONTAL_SCROLL_NAV" id="toolbar">
         <h1 class="text-white  h1 " id="titulo_h1"> Inicio </h1>
         <div class="d-none" id="toolbar_botones">
-            <a class="ml-3 btn buttons-white inicio" href="index.php" id="Inicio"> <i class="fas fa-home"></i> Inicio
+            <a class="ml-3 btn buttons-white inicio" onclick="cargar_pagina('inicio')" id="Inicio"> <i class="fas fa-home"></i> Inicio
             </a>
         </div>
     </div>
@@ -345,7 +342,6 @@
                                 window.location = 'index.php';
                             }, 1600);
                         } else {
-
                             $('#titulo_h1').css('textTransform', 'capitalize').html(data.pagina);
                         }
                         ;
@@ -383,7 +379,7 @@
                         $('#Id_pagina').html('');
                     });
                 } else {
-                    window.location = 'index.php';
+                    cargar_pagina('inicio');
                 }
             } catch (error_ex) {
                 $('#Id_pagina').html('');
@@ -422,7 +418,6 @@
         function cerrar(pagina) {
             delete_cookie('pasos');
             try {
-
                 HoldOn.open({
                     theme: 'sk-cube-grid',
                     backgroundColor: "rgba(0, 0, 0, 0.93)",
@@ -449,7 +444,7 @@
                     },
                     callback: function ($this, type, ev) {
                         if (type == 'si') {
-                            window.location = 'cerrar_session.php';
+                            cargar_pagina('cerrar_session');
                         }
                     }
                 });
@@ -599,13 +594,5 @@
             </li>
         </div>
     </footer>
-    <noscript>
-        <div class="alert alert-info alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>
-                Parece que no tenes activo Javascript,activalo la pagina web lo necesita para su buen funcionamiento
-            </strong>
-        </div>
-        <script type="text/javascript">window.location.href = "index.php";</script><noscript>
-            <meta http-equiv="refresh" content="0;url=index.php" />
-        </noscript>
+</body>
+</html>
