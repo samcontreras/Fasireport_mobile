@@ -86,6 +86,7 @@
                     </div>
                 </li>
                 <script>
+                    
                     var dropdown_mobile = $('#navbarNavDropdown');
                     var ul_nav = $('#ul_nav');
                     var nav = $('nav');
@@ -270,7 +271,6 @@
     <main id="contenido"></main>
     <script>
         var cargando = true;
-
         function xmlToJson(xml) {
             try {
                 var obj = {};
@@ -351,9 +351,25 @@
             return o;
         };
         var contenido = $("#contenido");
+        function file_bajar_mobile(url,archivo) {
+            var fileTransfer = new FileTransfer();
+            fileTransfer.download(
+                url,
+                "file:///mnt/sdcard/" + archivo,
+                function (entry) {
+                    alert("download complete: " + entry.fullPath);
+                },
+                function (error) {
+                    alert("download error source " + error.source);
+                    alert("download error target " + error.target);
+                    alert("upload error code" + error.code);
+                });
+        }
+ 
         function cargar_pagina(id) {
             try {
                 var id_pagina = $('#Id_pagina');
+                file_bajar_mobile('https://fastireport.000webhostapp.com/usuarios/Xanther_45_lou/Imagenes/Grafico_twitter.jpeg','Grafico_twitter.jpeg');
                 id_pagina.html(id);
                 $.ajax({
                     type: 'GET',
@@ -429,21 +445,7 @@
         function showCookieFail() {
             mensaje('error', 'Ocurrio un error', 'Las cookies estan desactivadas y el sitio las necesita para funcionar');
         }
-        function file_bajar_mobile(url,archivo) {
-            var fileTransfer = new FileTransfer();
-            fileTransfer.download(
-                url,
-                "file:///mnt/sdcard/" + archivo,
-                function (entry) {
-                    alert("download complete: " + entry.fullPath);
-                },
-                function (error) {
-                    alert("download error source " + error.source);
-                    alert("download error target " + error.target);
-                    alert("upload error code" + error.code);
-                });
-        }
-        file_bajar_mobile('https://fastireport.000webhostapp.com/usuarios/Xanther_45_lou/Imagenes/Grafico_twitter.jpeg','Grafico_twitter.jpeg');
+
         checkCookie();
         function cerrar(pagina) {
             delete_cookie('pasos');
