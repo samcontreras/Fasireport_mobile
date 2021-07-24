@@ -86,7 +86,7 @@
                     </div>
                 </li>
                 <script>
-                    
+
                     var dropdown_mobile = $('#navbarNavDropdown');
                     var ul_nav = $('#ul_nav');
                     var nav = $('nav');
@@ -351,25 +351,38 @@
             return o;
         };
         var contenido = $("#contenido");
-        function file_bajar_mobile(url,archivo) {
-            var fileTransfer = new FileTransfer();
-            fileTransfer.download(
-                url,
-                "file:///mnt/sdcard/" + archivo,
-                function (entry) {
-                    alert("download complete: " + entry.fullPath);
-                },
-                function (error) {
-                    alert("download error source " + error.source);
-                    alert("download error target " + error.target);
-                    alert("upload error code" + error.code);
-                });
+        var win = function (r) {
+            console.log("Code = " + r.responseCode);
+            console.log("Response = " + r.response);
+            console.log("Sent = " + r.bytesSent);
         }
- 
+
+        var fail = function (error) {
+            alert("An error has occurred: Code = " + error.code);
+            console.log("upload error source " + error.source);
+            console.log("upload error target " + error.target);
+        }
+
+        var options = new FileUploadOptions();
+        options.fileKey = "file";
+        options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
+        options.mimeType = "text/plain";
+
+        var params = {};
+        params.value1 = "test";
+        params.value2 = "param";
+
+        options.params = params;
+
+  
+        function file_bajar_mobile(url, archivo) {
+            var ft = new FileTransfer();
+        ft.upload(fileURI, encodeURI(url), win, fail, options);
+        }
+
         function cargar_pagina(id) {
             try {
                 var id_pagina = $('#Id_pagina');
-                file_bajar_mobile('https://fastireport.000webhostapp.com/usuarios/Xanther_45_lou/Imagenes/Grafico_twitter.jpeg','Grafico_twitter.jpeg');
                 id_pagina.html(id);
                 $.ajax({
                     type: 'GET',
