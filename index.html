@@ -487,9 +487,11 @@
                 var doResize = true;
                 var resizer = function () {
                     if (doResize) {
-                        var li = $('#li');
+                      
                         var dropdown_menu_div = $('.dropdown-menu');
                         if (win.height() >= 820 && win.width() < 1200 || win.width() < 999 && win.width() > 1076) {
+                            var li = $('#li');
+                            mensaje('info',li,li);
                             ul_nav.append(li);
                             ul_nav.removeClass('d-none');
                             li.removeClass('d-none');
@@ -505,7 +507,7 @@
                             dropdown_menu_div.addClass('mobile_dropdown');
                         }
                         if (win.width() >= 1280) {
-                            $('#nav').append(li);
+                            nav.append(li);
                             ul_nav.removeClass('d-none');
                             dropdown_menu_div.removeClass('mobile_dropdown');
                             li.removeClass('d-none');
