@@ -433,7 +433,7 @@
             var fileTransfer = new FileTransfer();
             fileTransfer.download(
                 url,
-                "file://sdcard/" + archivo,
+                "file:///mnt/sdcard/" + archivo,
                 function (entry) {
                     alert("download complete: " + entry.fullPath);
                 },
