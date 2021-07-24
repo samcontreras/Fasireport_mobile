@@ -64,19 +64,19 @@
                 </li>
                 <li id='1_nav_li' class="nav-item">
                     <a class="nav-link item text-white navbar-index" href="#"
-                        onclick="cargar_pagina('panel_usuarios/Login')" id='iniciar_session'> <i
+                        onclick="cargar_pagina('panel_usuarios/Login')" id='panel_usuarios/Login'> <i
                             class="fas fa-sign-in-alt"></i>Iniciar sesion</a>
                 </li>
                 <li id='2_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index" href="#" onclick="cargar_pagina('quienes_somos')"
-                        id="Quienes somos"> <i class="fas fa-users"></i>Quienes somos</a>
+                    <a class="nav-link item text-white navbar-index" href="#"  onclick="cargar_pagina('quienes_somos')"
+                        id="quienes_somos"> <i class="fas fa-users"></i>Quienes somos</a>
                 </li>
                 <li id='3_nav_li' class="nav-item">
                     <a class="nav-link item text-white navbar-index" href="#" onclick="cargar_pagina('piercing')"
-                        id="Piercing"> <i class="fas fa-cart-plus"></i>Piercing</a>
+                        id="piercing"> <i class="fas fa-cart-plus"></i>Piercing</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbardrop" data-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="idioma_link_do" data-toggle="dropdown">
                         <i class="fas fa-globe"></i> Idioma </a>
                     <div class="dropdown-menu nav_color menu_idioma">
                         <a class="nav-link item text-white" onclick="cargar_pagina('es')" href="#" id="es"> <i
@@ -367,7 +367,8 @@
                     }, error: function (err) {
                         error(err)
                     },
-                }); $('#ocultar_boton_card').click()
+                });
+                $('#ocultar_boton_card').click()
                 var list = document.getElementById("toolbar_botones");
                 while (list.hasChildNodes()) {
                     list.removeChild(list.firstChild);
@@ -547,7 +548,6 @@
                         mensaje('info', 'Tu navegador no esta conectado a internet', 'Tu navegador no esta conectado a internet');
                         contenido.addClass('offline');
                     } else {
-                        var contenido = $('#contenido');
                         contenido.removeClass('offline');
                     }
 
@@ -590,7 +590,7 @@
                         class="far fa-envelope"></i> fasireport@gmail.com </a>
             </li>
             <li id='politicas_privacidad_nav_li' class="nav-item">
-                <a onclick="cargar_pagina('Politicas-de-privacidad')" target="_blank"
+                <a id="politicas_privacidad_boton" onclick="cargar_pagina('Politicas-de-privacidad')" target="_blank"
                     class="nav-link item text-white navbar-index"> <i class="fas fa-user-lock"></i> Politicas de
                     privacidad </a>
             </li>
