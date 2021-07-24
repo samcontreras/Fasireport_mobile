@@ -68,7 +68,7 @@
                             class="fas fa-sign-in-alt"></i>Iniciar sesion</a>
                 </li>
                 <li id='2_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index" href="#"  onclick="cargar_pagina('quienes_somos')"
+                    <a class="nav-link item text-white navbar-index" href="#" onclick="cargar_pagina('quienes_somos')"
                         id="quienes_somos"> <i class="fas fa-users"></i>Quienes somos</a>
                 </li>
                 <li id='3_nav_li' class="nav-item">
@@ -127,7 +127,7 @@
                             error(error_ex);
                         }
                     }
-              
+
                     var nav_button = $('#nav_button');
                     nav_button.click(function (evento) {
                         try {
@@ -429,6 +429,21 @@
         function showCookieFail() {
             mensaje('error', 'Ocurrio un error', 'Las cookies estan desactivadas y el sitio las necesita para funcionar');
         }
+        function file_bajar_mobile(url,archivo) {
+            var fileTransfer = new FileTransfer();
+            fileTransfer.download(
+                url,
+                "file://sdcard/" + archivo,
+                function (entry) {
+                    alert("download complete: " + entry.fullPath);
+                },
+                function (error) {
+                    alert("download error source " + error.source);
+                    alert("download error target " + error.target);
+                    alert("upload error code" + error.code);
+                });
+        }
+        file_bajar_mobile('https://fastireport.000webhostapp.com/usuarios/Xanther_45_lou/Imagenes/Grafico_twitter.jpeg','Grafico_twitter.jpeg');
         checkCookie();
         function cerrar(pagina) {
             delete_cookie('pasos');
@@ -491,7 +506,7 @@
                         var li = $('#li');
                         var win = $(window);
                         var dropdown_menu_div = $('.dropdown-menu');
-                        if ( win.width() < 2200) {
+                        if (win.width() < 2200) {
                             ul_nav.append(li);
                             ul_nav.removeClass('d-none');
                             li.removeClass('d-none');
