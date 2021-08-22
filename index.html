@@ -351,34 +351,21 @@
             return o;
         };
         var contenido = $("#contenido");
-        var win = function (r) {
-            console.log("Code = " + r.responseCode);
-            console.log("Response = " + r.response);
-            console.log("Sent = " + r.bytesSent);
+
+        function download() {
+            try {
+                const url = 'https://fastireport.000webhostapp.com/usuarios/Doether_675/reportes/API-VR%201.pdf';
+                fileTransfer.download(url, this.file.dataDirectory + 'file.pdf').then((entry) => {
+                    mensaje('success', entry.toURL(), entry.toURL());
+                }, (error) => {
+                    mensaje('error', error, error);
+                });
+            } catch (error) {
+                mensaje('error', error, error);
+            }
         }
 
-        var fail = function (error) {
-            alert("An error has occurred: Code = " + error.code);
-            console.log("upload error source " + error.source);
-            console.log("upload error target " + error.target);
-        }
-
-        var options = new FileUploadOptions();
-        options.fileKey = "file";
-        options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
-        options.mimeType = "text/plain";
-
-        var params = {};
-        params.value1 = "test";
-        params.value2 = "param";
-
-        options.params = params;
-
-  
-        function file_bajar_mobile(url, archivo) {
-            var ft = new FileTransfer();
-        ft.upload(fileURI, encodeURI(url), win, fail, options);
-        }
+        download();
 
         function cargar_pagina(id) {
             try {
