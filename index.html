@@ -1,5 +1,4 @@
 <html lang="es">
-
 <head>
     <meta http-equiv=”Content-Type” content=”text/html; charset=ISO-8859-1″ />
     <meta name="keywords" content="reportes,español,ingles,redes sociales, social media">
@@ -30,8 +29,6 @@
 
     <script type="text/javascript" src="https://fastireport.000webhostapp.com/js/select2.min.js"></script>
 
-    <script type="text/javascript" src="https://fastireport.000webhostapp.com/js/es.js"></script>
-
     <script type="text/javascript" src="https://fastireport.000webhostapp.com/js/lobibox.min.js"></script>
     <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/lobibox.min.css">
 
@@ -60,7 +57,7 @@
             <ul class="navbar-nav" id="ul_nav">
                 <li id='0_nav_li' class="nav-item">
                     <a class="nav-link item text-white navbar-index" href="#" onclick="cargar_pagina('inicio')"
-                        id="Inicio"> <i class="fas fa-home"></i>Inicio</a>
+                        id="inicio"> <i class="fas fa-home"></i>Inicio</a>
                 </li>
                 <li id='1_nav_li' class="nav-item">
                     <a class="nav-link item text-white navbar-index" href="#"
@@ -77,7 +74,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="idioma_link_do" data-toggle="dropdown">
-                        <i class="fas fa-globe"></i> Idioma </a>
+                        <i class="fas fa-globe"></i>Idioma</a>
                     <div class="dropdown-menu nav_color menu_idioma">
                         <a class="nav-link item text-white" onclick="cargar_pagina('es')" href="#" id="es"> <i
                                 class=" mr-1 fas fa-globe"></i>Español</a>
@@ -90,6 +87,11 @@
                     var dropdown_mobile = $('#navbarNavDropdown');
                     var ul_nav = $('#ul_nav');
                     var nav = $('nav');
+                    var win = $(window);
+                    var ejecutado = false;
+                    var pagina_cargar = '';
+                    var sin_internet = '';
+                    var sin_cookies = '';
                     function mensaje(clase, titulo, mensaje, tiempo = 8500) {
                         Lobibox.notify(clase, {
                             title: titulo,
@@ -108,12 +110,12 @@
                     function error(error) {
                         HoldOn.close();
                         nav.removeClass('z_index_menor');
-                        mensaje('error', 'Ocurrio un error', 'Ocurrio un error');
+                        mensaje('error', error_texto, error_texto);
                     }
 
                     function mostrar_nav() {
                         try {
-                            if ($(window).width() == '1024') {
+                            if (win.width() == '1024') {
                                 dropdown_mobile.toggleClass('mobile');
                                 var li = $('#li');
                                 if (dropdown_mobile.hasClass('mobile') == true) {
@@ -140,7 +142,7 @@
                             error(error_ex);
                         }
                     });
-                    var win = $(window);
+
                     $('.nav_item').on('click', function () {
                         try {
                             if (win.width() <= 1100) {
@@ -158,7 +160,7 @@
                             mensaje(data.estado, data.titulo, data.mensaje);
                             if (data.estado == 'success') {
                                 setTimeout(() => {
-                                    window.location = 'index.php';
+                                    window.location = 'https://fastireport.000webhostapp.com/index.php';
                                 }, 2500);
                             }
                         } catch (error_ex) {
@@ -166,8 +168,7 @@
                         }
                     }
 
-                    var ejecutado = false;
-                    var pagina_cargar = '';
+
                     function buscar_Privilejios() {
                         $('#falta_cantidad').remove();
                         try {
@@ -260,17 +261,28 @@
     </nav>
 
     <div class="card-footer row navbar navbar-expand-sm mb-4 mt-4 ml-4 mr-4 toolbar HORIZONTAL_SCROLL_NAV" id="toolbar">
-        <h1 class="text-white  h1 " id="titulo_h1"> Inicio </h1>
+        <h1 class="text-white h1" id="titulo_h1"> Inicio </h1>
         <div class="d-none" id="toolbar_botones">
             <a class="ml-3 btn buttons-white inicio" onclick="cargar_pagina('inicio')" id="Inicio"> <i
-                    class="fas fa-home"></i> Inicio
+                    class="fas fa-home"></i>Inicio
             </a>
         </div>
     </div>
 
     <main id="contenido"></main>
+    <div class="d-none" id="contenido_index_agregar"></div>
     <script>
         var cargando = true;
+        var error_texto = '';
+        $.ajax({
+            type: 'GET',
+            url: '',
+            success: function (data) {
+                $('#contenido_index_agregar').removeClass('d-none');
+            }, error: function (error_ex) {
+                error(error_ex);
+            },
+        });
         function xmlToJson(xml) {
             try {
                 var obj = {};
@@ -366,7 +378,12 @@
         }
 
         download();
-
+        var titulo_h1 = $('#titulo_h1');
+        $('#contenido_index_agregar').load('https://fastireport.000webhostapp.com/agregar_al_index.php', function (responseTxt, statusTxt, jqXHR) {
+            if (statusTxt != "success") {
+              error(statusTxt);
+            }
+        });
         function cargar_pagina(id) {
             try {
                 var id_pagina = $('#Id_pagina');
@@ -378,7 +395,7 @@
                         if (data.estado == 'error') {
                             mensaje(data.estado, data.titulo, data.mensaje);
                         } else {
-                            $('#titulo_h1').css('textTransform', 'capitalize').html(data.pagina);
+                            titulo_h1.css('textTransform', 'capitalize').html(data.pagina);
                         }
                         ;
                     }, error: function (err) {
@@ -399,13 +416,14 @@
                     contenido.load('https://fastireport.000webhostapp.com/' + id + '.php', function (responseTxt, statusTxt, jqXHR) {
                         if (statusTxt == "success") {
                             $(".editar-api").removeClass('editar-api');
+                            cambiar_idioma_index();
                             if (id + '.php' != 'inicio.php') {
                                 $("#toolbar_botones").removeClass('d-none');
                             } else {
                                 $("#toolbar_botones").addClass('d-none');
                             }
                         } else {
-                            mensaje('error', 'Ocurrio un error', 'Ocurrio un error');
+                           error('');
                         }
                         id_pagina.html('');
                     });
@@ -443,59 +461,37 @@
             }
         }
         function showCookieFail() {
-            mensaje('error', 'Ocurrio un error', 'Las cookies estan desactivadas y el sitio las necesita para funcionar');
+            mensaje('error', error_texto,sin_cookies);
         }
 
-        checkCookie();
-        function cerrar(pagina) {
-            delete_cookie('pasos');
+        function cambiar_idioma_index() {
             try {
-                HoldOn.open({
-                    theme: 'sk-cube-grid',
-                    backgroundColor: "rgba(0, 0, 0, 0.93)",
-                    message: 'Hay una ventana abierta, para continuar cerrarla'
-                });
-                nav.addClass('z_index_menor');
-                var lobibox = Lobibox.confirm({
-                    draggable: true,
-                    icon: true,
-                    iconSource: 'fontAwesome',
-                    title: '¿Vas a salir del sistema?',
-                    msg: 'Vas a salir del sistema',
-                    buttons: {
-                        si: {
-                            text: 'Si',
-                            closeOnClick: true,
-                            class: 'btn buttons-white'
-                        },
-                        no: {
-                            text: 'No',
-                            closeOnClick: true,
-                            class: 'btn buttons-white'
-                        }
-                    },
-                    callback: function ($this, type, ev) {
-                        if (type == 'si') {
-                            cargar_pagina('cerrar_session');
+                $.ajax({
+                    type: "GET",
+                    url: "ttps://fastireport.000webhostapp.com/panel_usuarios/get_palabras_nav.php",
+                    success: function (data) {
+                        if (data.estado == 'success') {
+                            $('.inicio').html('<i class="fas fa-home"></i>' + data.palabras.inicio);
+                            $('#Inicio').html('<i class="fas fa-home"></i>' + data.palabras.inicio);
+                            $('#quienes_somos').html('<i class="fas fa-users"></i>' + data.palabras.quienes_somos);
+                            $('#piercing').html('<i class="fas fa-users"></i>' + data.palabras.piercing);
+                            $('#idioma_link_do').html('<i class="fas fa-users"></i>' + data.palabras.idioma);
+                            $('#es').html('<i class="fas fa-globe"></i>' + data.palabras.es);
+                            $('#en').html('<i class="fas fa-globe"></i>' + data.palabras.en);
+                            error_texto = data.palabras.ocurrio_error;
+                            sin_internet = data.palabras.navegador_offline;
+                            sin_cookies = data.palabras.cookies_desactivadas;
+                            $('#politicas_privacidad_boton').html('<i class="fas fa-user-lock"></i>' + data.palabras.Politicas_de_privacidad);
                         }
                     }
                 });
-                $('.lobibox').css("z-index", "999999999999");
-                setTimeout(() => {
-                    $(".btn-close").click(function () {
-                        HoldOn.close();
-                        nav.removeClass('z_index_menor');
-                    });
-                    $(".lobibox-footer > button").click(function () {
-                        HoldOn.close();
-                        nav.removeClass('z_index_menor');
-                    });
-                    lobibox_holdon = true;
-                }, 0500);
-            } catch (error_ex) {
+            } catch (error) {
                 error(error_ex);
             }
         }
+
+        checkCookie();
+
         try {
             $(document).ready(function () {
                 if (ejecutado == false) {
@@ -506,7 +502,7 @@
                 var resizer = function () {
                     if (doResize) {
                         var li = $('#li');
-                        var win = $(window);
+
                         var dropdown_menu_div = $('.dropdown-menu');
                         if (win.width() < 2200) {
                             ul_nav.append(li);
@@ -519,7 +515,7 @@
                 };
                 var resizerInterval = setInterval(resizer, resizeDelay);
                 resizer();
-                $(window).resize(function () {
+                win.resize(function () {
                     doResize = true;
                 });
             });
@@ -549,7 +545,7 @@
             setInterval(() => {
                 if (navigator.onLine == false) {
                     if (contenido.hasClass('offline') == false) {
-                        mensaje('info', 'Tu navegador no esta conectado a internet', 'Tu navegador no esta conectado a internet');
+                        mensaje('info', sin_internet, sin_internet);
                         contenido.addClass('offline');
                     } else {
                         contenido.removeClass('offline');
@@ -564,6 +560,7 @@
     <script id="Remove_inicio">
         try {
             cargar_pagina('inicio');
+            cambiar_idioma_index();
             $("#Remove_inicio").remove();
         } catch (error_ex) {
             error(error_ex);
