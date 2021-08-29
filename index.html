@@ -57,29 +57,29 @@
         <div class="collapse navbar-collapse hide" id="navbarNavDropdown">
             <ul class="navbar-nav" id="ul_nav">
                 <li id='0_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index" href="#" onclick="cargar_pagina('inicio')"
+                    <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('inicio')"
                         id="Inicio"> <i class="fas fa-home"></i>Inicio</a>
                 </li>
                 <li id='1_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index" href="#"
+                    <a class="nav-link item text-white navbar-index"
                         onclick="cargar_pagina('panel_usuarios/Login')" id='panel_usuarios/Login'> <i
                             class="fas fa-sign-in-alt"></i>Iniciar sesion</a>
                 </li>
                 <li id='2_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index" href="#" onclick="cargar_pagina('quienes_somos')"
+                    <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('quienes_somos')"
                         id="quienes_somos"> <i class="fas fa-users"></i>Quienes somos</a>
                 </li>
                 <li id='3_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index" href="#" onclick="cargar_pagina('piercing')"
+                    <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('piercing')"
                         id="piercing"> <i class="fas fa-cart-plus"></i>Piercing</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="idioma_link_do" data-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle text-white" id="idioma_link_do" data-toggle="dropdown">
                         <i class="fas fa-globe"></i>Idioma</a>
                     <div class="dropdown-menu nav_color menu_idioma">
-                        <a class="nav-link item text-white" onclick="cargar_pagina('es')" href="#" id="es"> <i
+                        <a class="nav-link item text-white" onclick="cargar_pagina('es')" id="es"> <i
                                 class=" mr-1 fas fa-globe"></i>Español</a>
-                        <a class="nav-link item text-white" onclick="cargar_pagina('en')" href="#" id="en"> <i
+                        <a class="nav-link item text-white" onclick="cargar_pagina('en')" id="en"> <i
                                 class=" mr-1 fas fa-globe"></i>Ingles</a>
                     </div>
                 </li>
@@ -112,7 +112,7 @@
                         try {
                             $.ajax({
                                 type: "GET",
-                                url: "ttps://fastireport.000webhostapp.com/panel_usuarios/get_palabras_nav.php",
+                                url: "https://fastireport.000webhostapp.com/panel_usuarios/get_palabras_nav.php",
                                 success: function (data) {
                                     if (data.estado == 'success') {
                                         $('.inicio').html('<i class="fas fa-home"></i>' + data.palabras.inicio);
