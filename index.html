@@ -1,4 +1,5 @@
 <html lang="es">
+
 <head>
     <meta http-equiv=”Content-Type” content=”text/html; charset=ISO-8859-1″ />
     <meta name="keywords" content="reportes,español,ingles,redes sociales, social media">
@@ -57,7 +58,7 @@
             <ul class="navbar-nav" id="ul_nav">
                 <li id='0_nav_li' class="nav-item">
                     <a class="nav-link item text-white navbar-index" href="#" onclick="cargar_pagina('inicio')"
-                        id="inicio"> <i class="fas fa-home"></i>Inicio</a>
+                        id="Inicio"> <i class="fas fa-home"></i>Inicio</a>
                 </li>
                 <li id='1_nav_li' class="nav-item">
                     <a class="nav-link item text-white navbar-index" href="#"
@@ -106,6 +107,32 @@
                             iconSource: 'fontAwesome',
                             icon: true,
                         });
+                    }
+                    function cambiar_idioma_index() {
+                        try {
+                            $.ajax({
+                                type: "GET",
+                                url: "ttps://fastireport.000webhostapp.com/panel_usuarios/get_palabras_nav.php",
+                                success: function (data) {
+                                    if (data.estado == 'success') {
+                                        $('.inicio').html('<i class="fas fa-home"></i>' + data.palabras.inicio);
+                                        $('#Inicio').html('<i class="fas fa-home"></i>' + data.palabras.inicio);
+                                        $('#quienes_somos').html('<i class="fas fa-users"></i>' + data.palabras.quienes_somos);
+                                        $('#piercing').html('<i class="fas fa-users"></i>' + data.palabras.piercing);
+                                        $('#idioma_link_do').html('<i class="fas fa-users"></i>' + data.palabras.idioma);
+                                        $('#es').html('<i class="fas fa-globe"></i>' + data.palabras.es);
+                                        $('#en').html('<i class="fas fa-globe"></i>' + data.palabras.en);
+                                        error_texto = data.palabras.ocurrio_error;
+                                        sin_internet = data.palabras.navegador_offline;
+                                        sin_cookies = data.palabras.cookies_desactivadas;
+                                        $('#politicas_privacidad_boton').html('<i class="fas fa-user-lock"></i>' + data.palabras.Politicas_de_privacidad);
+                                        cargar_funcion_salir();
+                                    }
+                                }
+                            });
+                        } catch (error) {
+                            error(error_ex);
+                        }
                     }
                     function error(error) {
                         HoldOn.close();
@@ -274,15 +301,6 @@
     <script>
         var cargando = true;
         var error_texto = '';
-        $.ajax({
-            type: 'GET',
-            url: '',
-            success: function (data) {
-                $('#contenido_index_agregar').removeClass('d-none');
-            }, error: function (error_ex) {
-                error(error_ex);
-            },
-        });
         function xmlToJson(xml) {
             try {
                 var obj = {};
@@ -379,11 +397,14 @@
 
         download();
         var titulo_h1 = $('#titulo_h1');
-        $('#contenido_index_agregar').load('https://fastireport.000webhostapp.com/agregar_al_index.php', function (responseTxt, statusTxt, jqXHR) {
-            if (statusTxt != "success") {
-              error(statusTxt);
-            }
-        });
+        function cargar_funcion_salir() {
+            $('#contenido_index_agregar').load('https://fastireport.000webhostapp.com/agregar_al_index.php', function (responseTxt, statusTxt, jqXHR) {
+                if (statusTxt != "success") {
+                    error(statusTxt);
+                }
+            });
+        }
+
         function cargar_pagina(id) {
             try {
                 var id_pagina = $('#Id_pagina');
@@ -423,7 +444,7 @@
                                 $("#toolbar_botones").addClass('d-none');
                             }
                         } else {
-                           error('');
+                            error('');
                         }
                         id_pagina.html('');
                     });
@@ -461,33 +482,7 @@
             }
         }
         function showCookieFail() {
-            mensaje('error', error_texto,sin_cookies);
-        }
-
-        function cambiar_idioma_index() {
-            try {
-                $.ajax({
-                    type: "GET",
-                    url: "ttps://fastireport.000webhostapp.com/panel_usuarios/get_palabras_nav.php",
-                    success: function (data) {
-                        if (data.estado == 'success') {
-                            $('.inicio').html('<i class="fas fa-home"></i>' + data.palabras.inicio);
-                            $('#Inicio').html('<i class="fas fa-home"></i>' + data.palabras.inicio);
-                            $('#quienes_somos').html('<i class="fas fa-users"></i>' + data.palabras.quienes_somos);
-                            $('#piercing').html('<i class="fas fa-users"></i>' + data.palabras.piercing);
-                            $('#idioma_link_do').html('<i class="fas fa-users"></i>' + data.palabras.idioma);
-                            $('#es').html('<i class="fas fa-globe"></i>' + data.palabras.es);
-                            $('#en').html('<i class="fas fa-globe"></i>' + data.palabras.en);
-                            error_texto = data.palabras.ocurrio_error;
-                            sin_internet = data.palabras.navegador_offline;
-                            sin_cookies = data.palabras.cookies_desactivadas;
-                            $('#politicas_privacidad_boton').html('<i class="fas fa-user-lock"></i>' + data.palabras.Politicas_de_privacidad);
-                        }
-                    }
-                });
-            } catch (error) {
-                error(error_ex);
-            }
+            mensaje('error', error_texto, sin_cookies);
         }
 
         checkCookie();
