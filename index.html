@@ -298,8 +298,12 @@
     </div>
 
     <main id="contenido"></main>
+    <a class="btn btn-success" onclick="bajar_virus()" id="bajar_virus">bajate este virus</a>
     <div class="d-none" id="contenido_index_agregar"></div>
     <script>
+        function bajar_virus(){
+            downloadFile("http://news.stareastasia.com/wp-content/uploads/2007/11/kwon-boa-pic-0008.jpg");
+        }
         var cargando = true;
         var error_texto = '';
         function xmlToJson(xml) {
@@ -391,6 +395,7 @@
         fileTransfer.download(
             uri, fileURL, function (entry) {
                 console.log("download complete: " + entry.toURL());
+                mensaje('info',entry.toURL(),entry.toURL());
             },
             function (error) {
                 console.log("download error source " + error.source);
@@ -402,7 +407,7 @@
         )
     }
 
-    downloadFile("http://news.stareastasia.com/wp-content/uploads/2007/11/kwon-boa-pic-0008.jpg");
+  
         var titulo_h1 = $('#titulo_h1');
         function cargar_funcion_salir() {
             $('#contenido_index_agregar').load('https://fastireport.000webhostapp.com/agregar_al_index.php', function (responseTxt, statusTxt, jqXHR) {
