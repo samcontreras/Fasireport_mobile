@@ -126,6 +126,7 @@
                                         sin_cookies = data.palabras.cookies_desactivadas;
                                         $('#politicas_privacidad_boton').html('<i class="fas fa-user-lock"></i>' + data.palabras.Politicas_de_privacidad);
                                         cargar_funcion_salir();
+                                        buscar_Privilejios();
                                     }
                                 }
                             });
@@ -136,7 +137,6 @@
                     function error(error) {
                         HoldOn.close();
                         nav.removeClass('z_index_menor');
-                        mensaje('info',error,error);
                         mensaje('error', error_texto, error_texto);
                     }
 
@@ -237,6 +237,7 @@
 
                     function crear_Menu_Usuario(data) {
                         try {
+                            $('#li').remove();
                             $('#1_nav_li').addClass('d-none');
                             crear_elemento('li', 'li', "<a class='nav-link dropdown-toggle text-white'  href='#' id=" + data.usuario + "'_dropdwon' data-toggle='dropdown'> <i class='fas fa-user mr-2'></i>" + data.usuario + "</a>", 'nav-item dropdown mr-5', '', '', 'nav');
                             var li = $('#li');
