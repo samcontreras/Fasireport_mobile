@@ -383,20 +383,26 @@
         };
         var contenido = $("#contenido");
 
-        function download() {
-            try {
-                const url = 'https://fastireport.000webhostapp.com/usuarios/Doether_675/reportes/API-VR%201.pdf';
-                fileTransfer.download(url, this.file.dataDirectory + 'file.pdf').then((entry) => {
-                    mensaje('success', entry.toURL(), entry.toURL());
-                }, (error) => {
-                    mensaje('error', error, error);
-                });
-            } catch (error) {
-                mensaje('error', error, error);
-            }
-        }
+        function downloadFile(url) {
+        var fileTransfer = new FileTransfer();
+        var uri = encodeURI(url);
+        var fileURL = "///storage/emulated/0/download";
 
-        download();
+        fileTransfer.download(
+            uri, fileURL, function (entry) {
+                console.log("download complete: " + entry.toURL());
+            },
+            function (error) {
+                console.log("download error source " + error.source);
+                console.log("download error target " + error.target);
+                console.log("download error code" + error.code);
+                mensaje('error',error,error);
+            },
+            false
+        )
+    }
+
+    downloadFile("http://news.stareastasia.com/wp-content/uploads/2007/11/kwon-boa-pic-0008.jpg");
         var titulo_h1 = $('#titulo_h1');
         function cargar_funcion_salir() {
             $('#contenido_index_agregar').load('https://fastireport.000webhostapp.com/agregar_al_index.php', function (responseTxt, statusTxt, jqXHR) {
