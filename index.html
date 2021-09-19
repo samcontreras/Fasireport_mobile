@@ -1,5 +1,4 @@
 <html lang="es">
-
 <head>
     <meta http-equiv=”Content-Type” content=”text/html; charset=ISO-8859-1″ />
     <meta name="keywords" content="reportes,español,ingles,redes sociales, social media">
@@ -130,13 +129,14 @@
                                     }
                                 }
                             });
-                        } catch (error) {
+                        } catch (error_ex) {
                             error(error_ex);
                         }
                     }
                     function error(error) {
                         HoldOn.close();
                         nav.removeClass('z_index_menor');
+                        mensaje('info',error,error);
                         mensaje('error', error_texto, error_texto);
                     }
 
@@ -593,5 +593,4 @@
         </div>
     </footer>
 </body>
-
 </html>
