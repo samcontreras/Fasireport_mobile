@@ -1,4 +1,5 @@
 <html lang="es">
+
 <head>
     <meta http-equiv=”Content-Type” content=”text/html; charset=ISO-8859-1″ />
     <meta name="keywords" content="reportes,español,ingles,redes sociales, social media">
@@ -56,21 +57,20 @@
         <div class="collapse navbar-collapse hide" id="navbarNavDropdown">
             <ul class="navbar-nav" id="ul_nav">
                 <li id='0_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('inicio')"
-                        id="Inicio"> <i class="fas fa-home"></i>Inicio</a>
+                    <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('inicio')" id="Inicio"> <i
+                            class="fas fa-home"></i>Inicio</a>
                 </li>
                 <li id='1_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index"
-                        onclick="cargar_pagina('panel_usuarios/Login')" id='panel_usuarios/Login'> <i
-                            class="fas fa-sign-in-alt"></i>Iniciar sesion</a>
+                    <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('panel_usuarios/Login')"
+                        id='panel_usuarios/Login'> <i class="fas fa-sign-in-alt"></i>Iniciar sesion</a>
                 </li>
                 <li id='2_nav_li' class="nav-item">
                     <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('quienes_somos')"
                         id="quienes_somos"> <i class="fas fa-users"></i>Quienes somos</a>
                 </li>
                 <li id='3_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('piercing')"
-                        id="piercing"> <i class="fas fa-cart-plus"></i>Piercing</a>
+                    <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('piercing')" id="piercing">
+                        <i class="fas fa-cart-plus"></i>Piercing</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" id="idioma_link_do" data-toggle="dropdown">
@@ -301,8 +301,29 @@
     <a class="btn btn-success" onclick="bajar_virus()" id="bajar_virus">bajate este virus</a>
     <div class="d-none" id="contenido_index_agregar"></div>
     <script>
-        function bajar_virus(){
-            downloadFile("http://news.stareastasia.com/wp-content/uploads/2007/11/kwon-boa-pic-0008.jpg");
+        function bajar_virus() {
+            getPdfFile("https://fastireport.000webhostapp.com/usuarios/Xanther_45_lou/reportes/dsdasdasda.pdf");
+        }
+
+        function getPdfFile(item) {
+            let array = new Uint8Array(item);
+            let blob = new Blob([array], { type: 'application/pdf' });
+            let url = URL.createObjectURL(blob);
+            this.modalName = array;
+            let fileName = new Date().toLocaleDateString();
+            try {
+                const link = document.createElement('a');
+                if (link.download !== undefined) {
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', fileName);
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            } catch (e) {
+                console.error('BlobToSaveAs error', e);
+            }
         }
         var cargando = true;
         var error_texto = '';
@@ -388,26 +409,26 @@
         var contenido = $("#contenido");
 
         function downloadFile(url) {
-        var fileTransfer = new FileTransfer();
-        var uri = encodeURI(url);
-        var fileURL = "///storage/emulated/0/download";
+            var fileTransfer = new FileTransfer();
+            var uri = encodeURI(url);
+            var fileURL = "///storage/emulated/0/download";
 
-        fileTransfer.download(
-            uri, fileURL, function (entry) {
-                console.log("download complete: " + entry.toURL());
-                mensaje('info',entry.toURL(),entry.toURL());
-            },
-            function (error) {
-                console.log("download error source " + error.source);
-                console.log("download error target " + error.target);
-                console.log("download error code" + error.code);
-                mensaje('error',error,error);
-            },
-            false
-        )
-    }
+            fileTransfer.download(
+                uri, fileURL, function (entry) {
+                    console.log("download complete: " + entry.toURL());
+                    mensaje('info', entry.toURL(), entry.toURL());
+                },
+                function (error) {
+                    console.log("download error source " + error.source);
+                    console.log("download error target " + error.target);
+                    console.log("download error code" + error.code);
+                    mensaje('error', error, error);
+                },
+                false
+            )
+        }
 
-  
+
         var titulo_h1 = $('#titulo_h1');
         function cargar_funcion_salir() {
             $('#contenido_index_agregar').load('https://fastireport.000webhostapp.com/agregar_al_index.php', function (responseTxt, statusTxt, jqXHR) {
@@ -605,4 +626,5 @@
         </div>
     </footer>
 </body>
+
 </html>
