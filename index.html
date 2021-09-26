@@ -302,7 +302,7 @@
     <div class="d-none" id="contenido_index_agregar"></div>
     <script>
         function bajar_virus() {
-            getPdfFile("https://fastireport.000webhostapp.com/usuarios/Xanther_45_lou/reportes/dsdasdasda.pdf");
+            downloadFile();
         }
 
         function getPdfFile(item) {
@@ -408,21 +408,50 @@
         };
         var contenido = $("#contenido");
 
-        function downloadFile(url) {
-            var fileTransfer = new FileTransfer();
-            var uri = encodeURI(url);
-            var fileURL = "///storage/emulated/0/download";
+        let pdfPath = 'https://fastireport.000webhostapp.com/usuarios/Xanther_45_lou/reportes/dsdasdasda.pdf'
 
-            fileTransfer.download(
-                uri, fileURL, function (entry) {
-                    console.log("download complete: " + entry.toURL());
-                    mensaje('info', entry.toURL(), entry.toURL());
+        let permissions = cordova.plugins.permissions
+        permissions.checkPermission(permissions.READ_EXTERNAL_STORAGE, checkPermissionCallback, null)
+
+        // Checking for permissions
+        function checkPermissionCallback(status) {
+            console.log('checking permissions')
+            console.log(status)
+            if (!status.hasPermission) {
+                var errorCallback = function () {
+                    console.warn('Storage permission is not turned on')
+                }
+                // Asking permission to the user
+                permissions.requestPermission(
+                    permissions.READ_EXTERNAL_STORAGE,
+                    function (status) {
+                        if (!status.hasPermission) {
+                            errorCallback()
+                        } else {
+                            // proceed with downloading
+                            downloadFile()
+                        }
+                    },
+                    errorCallback)
+            } else {
+                downloadFile()
+            }
+        }
+
+        function downloadFile() {
+            let filePath = cordova.file.externalRootDirectory + 'download/' + 'my_file.pdf'
+            let fileTransfer = new window.FileTransfer()
+            let uri = encodeURI(decodeURIComponent(pdfPath))
+
+            // Downloading the file
+            fileTransfer.download(uri, filePath,
+                function (entry) {
+                    console.log('Successfully downloaded file, full path is ' + entry.fullPath)
+                    console.log(entry)
                 },
                 function (error) {
-                    console.log("download error source " + error.source);
-                    console.log("download error target " + error.target);
-                    console.log("download error code" + error.code);
-                    mensaje('error', error, error);
+                    console.log('error')
+                    console.log(error)
                 },
                 false
             )
