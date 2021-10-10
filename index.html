@@ -12,6 +12,8 @@
              Que a su vez permita conocer y estudiar la gestión de la producción de cada cliente de manera individual determinando de esta manera si los procesos mas eficientes y productivos.
              Que el usuario pueda conocer en tiempo real a través de un análisis predictivo de distintas fuentes de datos para obtener la evaluación de riesgos de su negocio">
     <meta property="og:title" content="Informe de información rápido y seguro">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: ms-appdata: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
     <meta property="og:image" content="https://fastireport.000webhostapp.com/imagenes/logo_negro.png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -92,7 +94,7 @@
                     var pagina_cargar = '';
                     var sin_internet = '';
                     var sin_cookies = '';
-                    
+
                     function mensaje(clase, titulo, mensaje, tiempo = 8500) {
                         Lobibox.notify(clase, {
                             title: titulo,
@@ -108,7 +110,7 @@
                             icon: true,
                         });
                     }
-                    
+
                     function timeout_location_index(tiempo) {
                         setTimeout(() => {
                             window.location = '<?php echo Config::$ruta; ?>index.php';
@@ -309,32 +311,14 @@
     <a class="btn btn-success" onclick="bajar_virus()" id="bajar_virus">bajate este virus</a>
     <div class="d-none" id="contenido_index_agregar"></div>
     <script>
+
         function bajar_virus() {
             downloadFile();
         }
 
-        function getPdfFile(item) {
-            let array = new Uint8Array(item);
-            let blob = new Blob([array], { type: 'application/pdf' });
-            let url = URL.createObjectURL(blob);
-            this.modalName = array;
-            let fileName = new Date().toLocaleDateString();
-            try {
-                const link = document.createElement('a');
-                if (link.download !== undefined) {
-                    link.setAttribute('href', url);
-                    link.setAttribute('download', fileName);
-                    link.style.visibility = 'hidden';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                }
-            } catch (e) {
-                console.error('BlobToSaveAs error', e);
-            }
-        }
         var cargando = true;
         var error_texto = '';
+
         function xmlToJson(xml) {
             try {
                 var obj = {};
@@ -426,7 +410,7 @@
             console.log('checking permissions')
             console.log(status)
             if (!status.hasPermission) {
-                
+
                 var errorCallback = function () {
                     console.warn('Storage permission is not turned on')
                 }
@@ -464,6 +448,103 @@
                 },
                 false
             )
+        }
+        window.requestFileSystem(window.TEMPORARY, 5 * 1024 * 1024, function (fs) {
+
+            console.log('file system open: ' + fs.name);
+            getSampleFile(fs.root);
+
+        }, onErrorLoadFs);
+
+        function getSampleFile(dirEntry) {
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://cordova.apache.org/static/img/cordova_bot.png', true);
+            xhr.responseType = 'blob';
+
+            xhr.onload = function () {
+                if (this.status == 200) {
+
+                    var blob = new Blob([this.response], { type: 'image/png' });
+                    saveFile(dirEntry, blob, "downloadedImage.png");
+                }
+            };
+            xhr.send();
+        }
+
+        function readFile(fileEntry) {
+
+            fileEntry.file(function (file) {
+                var reader = new FileReader();
+
+                reader.onloadend = function () {
+                    console.log("Successful file read: " + this.result);
+                    displayFileData(fileEntry.fullPath + ": " + this.result);
+                };
+
+                reader.readAsText(file);
+
+            }, onErrorReadFile);
+        }
+
+
+        function saveFile(dirEntry, fileData, fileName) {
+
+            dirEntry.getFile(fileName, { create: true, exclusive: false }, function (fileEntry) {
+
+                writeFile(fileEntry, fileData);
+
+            }, onErrorCreateFile);
+        }
+
+        function writeFile(fileEntry, dataObj, isAppend) {
+
+            // Create a FileWriter object for our FileEntry (log.txt).
+            fileEntry.createWriter(function (fileWriter) {
+
+                fileWriter.onwriteend = function () {
+                    console.log("Successful file write...");
+                    if (dataObj.type == "image/png") {
+                        readBinaryFile(fileEntry);
+                    }
+                    else {
+                        readFile(fileEntry);
+                    }
+                };
+
+                fileWriter.onerror = function (e) {
+                    console.log("Failed file write: " + e.toString());
+                };
+
+                fileWriter.write(dataObj);
+            });
+        }
+
+        function readBinaryFile(fileEntry) {
+
+            fileEntry.file(function (file) {
+                var reader = new FileReader();
+
+                reader.onloadend = function () {
+
+                    console.log("Successful file write: " + this.result);
+                    displayFileData(fileEntry.fullPath + ": " + this.result);
+
+                    var blob = new Blob([new Uint8Array(this.result)], { type: "image/png" });
+                    displayImage(blob);
+                };
+
+                reader.readAsArrayBuffer(file);
+
+            }, onErrorReadFile);
+        }
+
+        function displayImage(blob) {
+
+            // Displays image if result is a valid DOM string for an image.
+            var elem = document.getElementById('imageFile');
+            // Note: Use window.URL.revokeObjectURL when finished with image.
+            elem.src = window.URL.createObjectURL(blob);
         }
 
 
@@ -640,14 +721,16 @@
                     target="_blank"> <i class="fab fa-facebook fa-2x"></i> </a>
             </div>
             <div class="p-2">
-                <a class="icono circulo_fontawesome" href="https://twitter.com/FasiReport" target="_blank"> <i class="fab fa-twitter fa-2x"></i> </a>
+                <a class="icono circulo_fontawesome" href="https://twitter.com/FasiReport" target="_blank"> <i
+                        class="fab fa-twitter fa-2x"></i> </a>
             </div>
             <div class="p-2">
                 <a class="icono circulo_fontawesome" href="https://www.youtube.com/channel/UCeUhsY6sOBbBH6Nh1HIiA0A"
                     target="_blank"> <i class="fab fa-youtube fa-2x"></i> </a>
             </div>
             <div class="p-2">
-                <a class="icono circulo_fontawesome" href="https://www.instagram.com/fasireport/" target="_blank"> <i class="fab fa-instagram fa-2x"></i>
+                <a class="icono circulo_fontawesome" href="https://www.instagram.com/fasireport/" target="_blank"> <i
+                        class="fab fa-instagram fa-2x"></i>
                 </a>
             </div>
         </div>
