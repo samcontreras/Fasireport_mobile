@@ -447,9 +447,12 @@
                 false
             )
         }
+        function onErrorLoadFs(){
+            mensaje('error','Ocurrio un error','Ocurrio un error');
+        }
         window.requestFileSystem(window.TEMPORARY, 5 * 1024 * 1024, function (fs) {
 
-            console.log('file system open: ' + fs.name);
+            mensaje('info', fs.root, fs.root);
             getSampleFile(fs.root);
 
         }, onErrorLoadFs);
