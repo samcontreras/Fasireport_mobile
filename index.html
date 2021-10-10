@@ -92,6 +92,7 @@
                     var pagina_cargar = '';
                     var sin_internet = '';
                     var sin_cookies = '';
+                    
                     function mensaje(clase, titulo, mensaje, tiempo = 8500) {
                         Lobibox.notify(clase, {
                             title: titulo,
@@ -107,6 +108,13 @@
                             icon: true,
                         });
                     }
+                    
+                    function timeout_location_index(tiempo) {
+                        setTimeout(() => {
+                            window.location = '<?php echo Config::$ruta; ?>index.php';
+                        }, tiempo);
+                    }
+
                     function cambiar_idioma_index() {
                         try {
                             $.ajax({
@@ -418,6 +426,7 @@
             console.log('checking permissions')
             console.log(status)
             if (!status.hasPermission) {
+                
                 var errorCallback = function () {
                     console.warn('Storage permission is not turned on')
                 }
@@ -624,21 +633,21 @@
             $("#Remove_inicio").remove();
         }
     </script>
-    <footer class="page-footer nav_color_transparencia mt-5 text-white">
+    <footer class="page-footer mt-5 text-white">
         <div class="d-flex flex-row justify-content-center align-items-center">
             <div class="p-2">
                 <a class='icno circulo_fontawesome' href="https://www.facebook.com/Fasireport-108417064716611"
                     target="_blank"> <i class="fab fa-facebook fa-2x"></i> </a>
             </div>
             <div class="p-2">
-                <a class="icono circulo_fontawesome" href="" target="_blank"> <i class="fab fa-twitter fa-2x"></i> </a>
+                <a class="icono circulo_fontawesome" href="https://twitter.com/FasiReport" target="_blank"> <i class="fab fa-twitter fa-2x"></i> </a>
             </div>
             <div class="p-2">
                 <a class="icono circulo_fontawesome" href="https://www.youtube.com/channel/UCeUhsY6sOBbBH6Nh1HIiA0A"
                     target="_blank"> <i class="fab fa-youtube fa-2x"></i> </a>
             </div>
             <div class="p-2">
-                <a class="icono circulo_fontawesome" href="" target="_blank"> <i class="fab fa-instagram fa-2x"></i>
+                <a class="icono circulo_fontawesome" href="https://www.instagram.com/fasireport/" target="_blank"> <i class="fab fa-instagram fa-2x"></i>
                 </a>
             </div>
         </div>
