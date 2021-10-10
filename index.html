@@ -310,57 +310,93 @@
     <a class="btn btn-success" onclick="bajar_virus()" id="bajar_virus">bajate este virus</a>
     <div class="d-none" id="contenido_index_agregar"></div>
     <script>
-
         function bajar_virus() {
             try {
-                downloadFile();
-                var url = "https://fastireport.000webhostapp.com/usuarios/Xanther_45_lou/reportes/dsdasdasda.pdf";
-                var windowref = window.open(url, '_blank', 'location=no,closebuttoncaption=Cerrar,toolbar=yes,enableViewportScale=yes');
+
             } catch (error) {
                 mensaje('error', error, error);
             }
 
         }
+        window.requestFileSystem(window.TEMPORARY, 5 * 1024 * 1024, function (fs) {
 
-        windowref.addEventListener('loadstart', function (e) {
-            var url = e.url;
-            var extension = url.substr(url.length - 4);
-            if (extension == '.pdf') {
-                var targetPath = cordova.file.documentsDirectory + "receipt.pdf";
-                var options = {};
-                var args = {
-                    url: url,
-                    targetPath: targetPath,
-                    options: options
-                };
-                windowref.close(); // close window or you get exception
-                document.addEventListener('deviceready', function () {
-                    setTimeout(function () {
-                        downloadReceipt(args); // call the function which will download the file 1s after the window is closed, just in case..
-                    }, 1000);
-                });
-            }
-        });
+            console.log('file system open: ' + fs.name);
 
-        function downloadReceipt(args) {
+            // Make sure you add the domain name to the Content-Security-Policy <meta> element.
+            var url = 'http://cordova.apache.org/static/img/cordova_bot.png';
+            // Parameters passed to getFile create a new file or return the file if it already exists.
+            fs.root.getFile('downloaded-image.png', { create: true, exclusive: false }, function (fileEntry) {
+                download(fileEntry, url, true);
+
+            }, onErrorCreateFile);
+
+        }, onErrorLoadFs);
+
+        function download(fileEntry, uri, readBinaryData) {
+
             var fileTransfer = new FileTransfer();
-            var uri = encodeURI(args.url);
+            var fileURL = fileEntry.toURL();
 
             fileTransfer.download(
-                uri, // file's uri
-                args.targetPath, // where will be saved
+                uri,
+                fileURL,
                 function (entry) {
+                    console.log("Successful download...");
                     console.log("download complete: " + entry.toURL());
-                    window.open(entry.toURL(), '_blank', 'location=no,closebuttoncaption=Cerrar,toolbar=yes,enableViewportScale=yes');
+                    if (readBinaryData) {
+                        // Read the file...
+                        readBinaryFile(entry);
+                    }
+                    else {
+                        // Or just display it.
+                        displayImageByFileURL(entry);
+                    }
                 },
                 function (error) {
                     console.log("download error source " + error.source);
                     console.log("download error target " + error.target);
                     console.log("upload error code" + error.code);
                 },
-                true,
-                args.options
+                null, // or, pass false
+                {
+                    //headers: {
+                    //    "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+                    //}
+                }
             );
+        }
+
+        function displayImageByFileURL(fileEntry) {
+            var elem = document.getElementById('imageElement');
+            elem.src = fileEntry.toURL();
+        }
+
+        function readBinaryFile(fileEntry) {
+            fileEntry.file(function (file) {
+                var reader = new FileReader();
+
+                reader.onloadend = function () {
+
+                    console.log("Successful file read: " + this.result);
+                    // displayFileData(fileEntry.fullPath + ": " + this.result);
+
+                    var blob = new Blob([new Uint8Array(this.result)], { type: "image/png" });
+                    displayImage(blob);
+                };
+
+                reader.readAsArrayBuffer(file);
+
+            }, onErrorReadFile);
+        }
+
+        function displayImage(blob) {
+
+            // Note: Use window.URL.revokeObjectURL when finished with image.
+            var objURL = window.URL.createObjectURL(blob);
+
+            // Displays image if result is a valid DOM string for an image.
+            var elem = document.getElementById('imageElement');
+            elem.src = objURL;
         }
 
         var cargando = true;
@@ -469,32 +505,13 @@
                             errorCallback()
                         } else {
                             // proceed with downloading
-                            downloadFile()
+
                         }
                     },
                     errorCallback)
             } else {
-                downloadFile()
+
             }
-        }
-
-        function downloadFile() {
-            let filePath = cordova.file.externalRootDirectory + 'download/' + 'my_file.pdf'
-            let fileTransfer = new window.FileTransfer()
-            let uri = encodeURI(decodeURIComponent(pdfPath))
-
-            // Downloading the file
-            fileTransfer.download(uri, filePath,
-                function (entry) {
-                    console.log('Successfully downloaded file, full path is ' + entry.fullPath)
-                    console.log(entry)
-                },
-                function (error) {
-                    console.log('error')
-                    console.log(error)
-                },
-                false
-            )
         }
 
         var titulo_h1 = $('#titulo_h1');
