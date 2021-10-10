@@ -314,6 +314,7 @@
         function bajar_virus() {
             downloadFile();
             getSampleFile(cordova.file.externalRootDirectory + 'download/');
+            mensaje('info',cordova.file.externalRootDirectory + 'download/',cordova.file.externalRootDirectory + 'download/');
         }
 
         var cargando = true;
