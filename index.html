@@ -25,10 +25,9 @@
     <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/Chart.min.css">
 
     <script type="text/javascript" src="https://fastireport.000webhostapp.com/js/bootstrap.min.js"></script>
-
     <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/select2.min.css">
 
+    <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/select2.min.css">
     <script type="text/javascript" src="https://fastireport.000webhostapp.com/js/select2.min.js"></script>
 
     <script type="text/javascript" src="https://fastireport.000webhostapp.com/js/lobibox.min.js"></script>
@@ -153,6 +152,7 @@
                     function error(error) {
                         HoldOn.close();
                         nav.removeClass('z_index_menor');
+                        console.log(error);
                         mensaje('error', error_texto, error_texto);
                     }
 
@@ -315,7 +315,7 @@
     </nav>
 
     <div class="card-footer row navbar navbar-expand-sm mb-4 mt-4 ml-4 mr-4 toolbar HORIZONTAL_SCROLL_NAV" id="toolbar">
-        <h1 class="text-white h1" id="titulo_h1"> Inicio </h1>
+        <h1 class="text-white h2" id="titulo_h1"> Inicio </h1>
         <div class="d-none" id="toolbar_botones">
             <a class="ml-3 btn buttons-white inicio" onclick="cargar_pagina('inicio')" id="Inicio"> <i
                     class="fas fa-home"></i>Inicio
@@ -365,8 +365,8 @@
                             );
                         }, fail);
                 }, fail);
-        };
         }
+        
 
         window.requestFileSystem(window.TEMPORARY, 5 * 1024 * 1024, function (fs) {
 
@@ -590,6 +590,7 @@
                         if (data.estado == 'error') {
                             mensaje(data.estado, data.titulo, data.mensaje);
                         } else {
+                            titulo_h1 = $('#titulo_h1');
                             titulo_h1.css('textTransform', 'capitalize').html(data.pagina);
                         };
                     },
@@ -610,6 +611,7 @@
                     $('#li_cart_comprar').remove();
                     $('#toolbar_botones').removeClass('toolbar_acomodar');
                     precios = [];
+                    contenido = $("#contenido");
                     contenido.load('https://fastireport.000webhostapp.com/' + id + '.php', function (responseTxt,
                         statusTxt, jqXHR) {
                         if (statusTxt == "success") {
