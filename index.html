@@ -447,11 +447,11 @@
             });
         }
 
-        function crer_item_bajar_archivo_mobile(data){
+        function crer_item_bajar_archivo_mobile(estado,nombre,archvo){
             try {
-                if(data.estado == 'success'){
+                if(estado == 'success'){
                     $('#id_bajar_archivo').remove();    
-                    crear_elemento('a', 'id_bajar_archivo', '<i class="far fa-file-excel mr-3"></i>' +  data.nombre, 'btn buttons-green ', data.archivo);
+                    crear_elemento('a', 'id_bajar_archivo', '<i class="far fa-file-excel mr-3"></i>' +  nombre, 'btn buttons-green ', archvo);
                 }
             } catch (error_ex) {
                 error(error_ex);
