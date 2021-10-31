@@ -326,7 +326,6 @@
     <main id="contenido"></main>
     <div class="d-none" id="contenido_index_agregar"></div>
     <script>
-      
         var cargando = true;
         var error_texto = '';
 
@@ -420,7 +419,7 @@
             if (!status.hasPermission) {
 
                 var errorCallback = function () {
-                
+
                 }
                 // Asking permission to the user
                 permissions.requestPermission(
@@ -436,6 +435,20 @@
             }
         }
 
+        document.addEventListener('deviceready', onDeviceReady);
+
+        function onDeviceReady() {
+            var success = function (status) {
+                alert('Message: ' + status);
+            }
+
+            var error = function (status) {
+                alert('Error: ' + status);
+            }
+
+            window.cache.clear(success, error);
+        }
+
         var titulo_h1 = $('#titulo_h1');
 
         function cargar_funcion_salir() {
@@ -447,11 +460,12 @@
             });
         }
 
-        function crer_item_bajar_archivo_mobile(estado,nombre,archvo){
+        function crer_item_bajar_archivo_mobile(estado, nombre, archvo) {
             try {
-                if(estado == 'success'){
-                    $('#id_bajar_archivo').remove();    
-                    crear_elemento('a', 'id_bajar_archivo', '<i class="far fa-file-excel mr-3"></i>' +  nombre, 'btn buttons-green mr-3', archvo);
+                if (estado == 'success') {
+                    $('#id_bajar_archivo').remove();
+                    crear_elemento('a', 'id_bajar_archivo', '<i class="far fa-file-excel mr-3"></i>' + nombre,
+                        'btn buttons-green mr-3', archvo);
                 }
             } catch (error_ex) {
                 error(error_ex);
