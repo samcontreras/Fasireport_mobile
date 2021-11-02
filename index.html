@@ -430,8 +430,6 @@
                         }
                     },
                     errorCallback)
-            } else {
-
             }
         }
 
@@ -441,11 +439,9 @@
             var success = function (status) {
                 alert('Message: ' + status);
             }
-
             var error = function (status) {
                 alert('Error: ' + status);
             }
-
             window.cache.clear(success, error);
         }
 
@@ -464,7 +460,7 @@
             try {
                 if (estado == 'success') {
                     $('#id_bajar_archivo').remove();
-                    crear_elemento('a', 'id_bajar_archivo', '<i class="far fa-file-excel mr-3"></i>' + nombre,
+                    crear_elemento('a', 'id_bajar_archivo', '<i class="fas fa-file-download mr-3"></i>' + nombre,
                         'btn buttons-green mr-3', archvo);
                 }
             } catch (error_ex) {
