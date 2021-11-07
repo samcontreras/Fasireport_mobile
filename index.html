@@ -25,10 +25,9 @@
     <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/Chart.min.css">
 
     <script type="text/javascript" src="https://fastireport.000webhostapp.com/js/bootstrap.min.js"></script>
-
     <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/select2.min.css">
 
+    <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/select2.min.css">
     <script type="text/javascript" src="https://fastireport.000webhostapp.com/js/select2.min.js"></script>
 
     <script type="text/javascript" src="https://fastireport.000webhostapp.com/js/lobibox.min.js"></script>
@@ -75,7 +74,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" id="idioma_link_do" data-toggle="dropdown">
-                        <i class="fas fa-globe"></i>Idioma</a>
+                        <i class="fas fa-globe"></i><span class="ml-1">Idioma</span></a>
                     <div class="dropdown-menu nav_color menu_idioma">
                         <a class="nav-link item text-white" onclick="cargar_pagina('es')" id="es"> <i
                                 class=" mr-1 fas fa-globe"></i>Español</a>
@@ -84,7 +83,6 @@
                     </div>
                 </li>
                 <script>
-
                     var dropdown_mobile = $('#navbarNavDropdown');
                     var ul_nav = $('#ul_nav');
                     var nav = $('nav');
@@ -123,17 +121,24 @@
                                 url: "https://fastireport.000webhostapp.com/panel_usuarios/get_palabras_nav.php",
                                 success: function (data) {
                                     if (data.estado == 'success') {
-                                        $('.inicio').html('<i class="fas fa-home"></i>' + data.palabras.inicio);
-                                        $('#Inicio').html('<i class="fas fa-home"></i>' + data.palabras.inicio);
-                                        $('#quienes_somos').html('<i class="fas fa-users"></i>' + data.palabras.quienes_somos);
-                                        $('#piercing').html('<i class="fas fa-users"></i>' + data.palabras.piercing);
-                                        $('#idioma_link_do').html('<i class="fas fa-users"></i>' + data.palabras.idioma);
+                                        $('.inicio').html('<i class="fas fa-home"></i>' + data.palabras
+                                            .inicio);
+                                        $('#Inicio').html('<i class="fas fa-home"></i>' + data.palabras
+                                            .inicio);
+                                        $('#quienes_somos').html('<i class="fas fa-users"></i>' + data
+                                            .palabras.quienes_somos);
+                                        $('#piercing').html('<i class="fas fa-users"></i>' + data.palabras
+                                            .piercing);
+                                        $('#idioma_link_do').html('<i class="fas fa-users"></i>' + data
+                                            .palabras.idioma);
                                         $('#es').html('<i class="fas fa-globe"></i>' + data.palabras.es);
                                         $('#en').html('<i class="fas fa-globe"></i>' + data.palabras.en);
                                         error_texto = data.palabras.ocurrio_error;
                                         sin_internet = data.palabras.navegador_offline;
                                         sin_cookies = data.palabras.cookies_desactivadas;
-                                        $('#politicas_privacidad_boton').html('<i class="fas fa-user-lock"></i>' + data.palabras.Politicas_de_privacidad);
+                                        $('#politicas_privacidad_boton').html(
+                                            '<i class="fas fa-user-lock"></i>' + data.palabras
+                                            .Politicas_de_privacidad);
                                         cargar_funcion_salir();
                                         buscar_Privilejios();
                                     }
@@ -143,9 +148,11 @@
                             error(error_ex);
                         }
                     }
+
                     function error(error) {
                         HoldOn.close();
                         nav.removeClass('z_index_menor');
+                        console.log(error);
                         mensaje('error', error_texto, error_texto);
                     }
 
@@ -189,6 +196,7 @@
                         }
 
                     });
+
                     function dar_item_callback(data) {
                         try {
                             $('#payment_id').html('');
@@ -214,7 +222,8 @@
                                     url: 'https://fastireport.000webhostapp.com/privilejios.php?buscar=true',
                                     success: function (data) {
                                         cambiar(data);
-                                    }, error: function (err) {
+                                    },
+                                    error: function (err) {
                                         error(err)
                                     },
                                 });
@@ -248,7 +257,10 @@
                         try {
                             $('#li').remove();
                             $('#1_nav_li').addClass('d-none');
-                            crear_elemento('li', 'li', "<a class='nav-link dropdown-toggle text-white'  href='#' id=" + data.usuario + "'_dropdwon' data-toggle='dropdown'> <i class='fas fa-user mr-2'></i>" + data.usuario + "</a>", 'nav-item dropdown mr-5', '', '', 'nav');
+                            crear_elemento('li', 'li', "<a class='nav-link dropdown-toggle text-white'  href='#' id=" +
+                                data.usuario +
+                                "'_dropdwon' data-toggle='dropdown'> <i class='fas fa-user mr-2'></i>" + data
+                                .usuario + "</a>", 'nav-item dropdown mr-5', '', '', 'nav');
                             var li = $('#li');
                             li.append("<div class='dropdown-menu nav_color' id='drop_login'></div>");
                             for (var x = 0; x < data.cantidad; x++) {
@@ -257,7 +269,10 @@
                                 if (elemento[1] == 'cerrar_session') {
                                     onclick = 'cerrar';
                                 }
-                                crear_elemento('li', 'nav_item_' + elemento[1].replace('/', '-'), " <a  onclick=" + onclick + "('" + elemento[1] + "') class='nav-link item text-white' id='" + elemento[1] + "'> <i class ='mr-2 " + elemento[2] + "'></i> " + elemento[0] + "</a>", 'nav-item', '', '', 'drop_login');
+                                crear_elemento('li', 'nav_item_' + elemento[1].replace('/', '-'), " <a  onclick=" +
+                                    onclick + "('" + elemento[1] + "') class='nav-link item text-white' id='" +
+                                    elemento[1] + "'> <i class ='mr-2 " + elemento[2] + "'></i> " + elemento[0] +
+                                    "</a>", 'nav-item', '', '', 'drop_login');
                             }
                             ejecutado = true;
                         } catch (error_ex) {
@@ -283,7 +298,9 @@
                         var fecha_string = '';
                         try {
                             var fecha_date = new Date(fecha);
-                            fecha_string = fecha_date.getUTCDate() + '-' + (fecha_date.getUTCMonth() + 1) + '-' + fecha_date.getUTCFullYear() + '- ' + fecha_date.getHours() + ': ' + fecha_date.getUTCMinutes() + ': ' + fecha_date.getUTCSeconds();
+                            fecha_string = fecha_date.getUTCDate() + '-' + (fecha_date.getUTCMonth() + 1) + '-' +
+                                fecha_date.getUTCFullYear() + '- ' + fecha_date.getHours() + ': ' + fecha_date
+                                .getUTCMinutes() + ': ' + fecha_date.getUTCSeconds();
                         } catch (error_ex) {
                             error(error_ex);
                         }
@@ -298,7 +315,7 @@
     </nav>
 
     <div class="card-footer row navbar navbar-expand-sm mb-4 mt-4 ml-4 mr-4 toolbar HORIZONTAL_SCROLL_NAV" id="toolbar">
-        <h1 class="text-white h1" id="titulo_h1"> Inicio </h1>
+        <h1 class="text-white h2" id="titulo_h1"> Inicio </h1>
         <div class="d-none" id="toolbar_botones">
             <a class="ml-3 btn buttons-white inicio" onclick="cargar_pagina('inicio')" id="Inicio"> <i
                     class="fas fa-home"></i>Inicio
@@ -307,98 +324,8 @@
     </div>
 
     <main id="contenido"></main>
-    <a class="btn btn-success" onclick="bajar_virus()" id="bajar_virus">bajate este virus</a>
     <div class="d-none" id="contenido_index_agregar"></div>
     <script>
-        function bajar_virus() {
-            try {
-
-            } catch (error) {
-                mensaje('error', error, error);
-            }
-
-        }
-        window.requestFileSystem(window.TEMPORARY, 5 * 1024 * 1024, function (fs) {
-
-            console.log('file system open: ' + fs.name);
-
-            // Make sure you add the domain name to the Content-Security-Policy <meta> element.
-            var url = 'http://cordova.apache.org/static/img/cordova_bot.png';
-            // Parameters passed to getFile create a new file or return the file if it already exists.
-            fs.root.getFile('downloaded-image.png', { create: true, exclusive: false }, function (fileEntry) {
-                download(fileEntry, url, true);
-
-            }, onErrorCreateFile);
-
-        }, onErrorLoadFs);
-
-        function download(fileEntry, uri, readBinaryData) {
-
-            var fileTransfer = new FileTransfer();
-            var fileURL = fileEntry.toURL();
-
-            fileTransfer.download(
-                uri,
-                fileURL,
-                function (entry) {
-                    console.log("Successful download...");
-                    console.log("download complete: " + entry.toURL());
-                    if (readBinaryData) {
-                        // Read the file...
-                        readBinaryFile(entry);
-                    }
-                    else {
-                        // Or just display it.
-                        displayImageByFileURL(entry);
-                    }
-                },
-                function (error) {
-                    console.log("download error source " + error.source);
-                    console.log("download error target " + error.target);
-                    console.log("upload error code" + error.code);
-                },
-                null, // or, pass false
-                {
-                    //headers: {
-                    //    "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
-                    //}
-                }
-            );
-        }
-
-        function displayImageByFileURL(fileEntry) {
-            var elem = document.getElementById('imageElement');
-            elem.src = fileEntry.toURL();
-        }
-
-        function readBinaryFile(fileEntry) {
-            fileEntry.file(function (file) {
-                var reader = new FileReader();
-
-                reader.onloadend = function () {
-
-                    console.log("Successful file read: " + this.result);
-                    // displayFileData(fileEntry.fullPath + ": " + this.result);
-
-                    var blob = new Blob([new Uint8Array(this.result)], { type: "image/png" });
-                    displayImage(blob);
-                };
-
-                reader.readAsArrayBuffer(file);
-
-            }, onErrorReadFile);
-        }
-
-        function displayImage(blob) {
-
-            // Note: Use window.URL.revokeObjectURL when finished with image.
-            var objURL = window.URL.createObjectURL(blob);
-
-            // Displays image if result is a valid DOM string for an image.
-            var elem = document.getElementById('imageElement');
-            elem.src = objURL;
-        }
-
         var cargando = true;
         var error_texto = '';
 
@@ -483,19 +410,16 @@
         };
         var contenido = $("#contenido");
 
-        let pdfPath = 'https://fastireport.000webhostapp.com/usuarios/Xanther_45_lou/reportes/dsdasdasda.pdf'
 
         let permissions = cordova.plugins.permissions
         permissions.checkPermission(permissions.READ_EXTERNAL_STORAGE, checkPermissionCallback, null)
 
         // Checking for permissions
         function checkPermissionCallback(status) {
-            console.log('checking permissions')
-            console.log(status)
             if (!status.hasPermission) {
 
                 var errorCallback = function () {
-                    console.warn('Storage permission is not turned on')
+
                 }
                 // Asking permission to the user
                 permissions.requestPermission(
@@ -503,24 +427,45 @@
                     function (status) {
                         if (!status.hasPermission) {
                             errorCallback()
-                        } else {
-                            // proceed with downloading
-
                         }
                     },
                     errorCallback)
-            } else {
-
             }
         }
 
+        document.addEventListener('deviceready', onDeviceReady);
+
+        function onDeviceReady() {
+            var success = function (status) {
+                alert('Message: ' + status);
+            }
+            var error = function (status) {
+                alert('Error: ' + status);
+            }
+            window.cache.clear(success, error);
+        }
+
         var titulo_h1 = $('#titulo_h1');
+
         function cargar_funcion_salir() {
-            $('#contenido_index_agregar').load('https://fastireport.000webhostapp.com/agregar_al_index.php', function (responseTxt, statusTxt, jqXHR) {
+            $('#contenido_index_agregar').load('https://fastireport.000webhostapp.com/agregar_al_index.php', function (
+                responseTxt, statusTxt, jqXHR) {
                 if (statusTxt != "success") {
                     error(statusTxt);
                 }
             });
+        }
+
+        function crer_item_bajar_archivo_mobile(estado, nombre, archvo) {
+            try {
+                if (estado == 'success') {
+                    $('#id_bajar_archivo').remove();
+                    crear_elemento('a', 'id_bajar_archivo', '<i class="fas fa-file-download mr-3"></i>' + nombre,
+                        'btn buttons-green mr-3', archvo);
+                }
+            } catch (error_ex) {
+                error(error_ex);
+            }
         }
 
         function cargar_pagina(id) {
@@ -534,10 +479,11 @@
                         if (data.estado == 'error') {
                             mensaje(data.estado, data.titulo, data.mensaje);
                         } else {
+                            titulo_h1 = $('#titulo_h1');
                             titulo_h1.css('textTransform', 'capitalize').html(data.pagina);
-                        }
-                        ;
-                    }, error: function (err) {
+                        };
+                    },
+                    error: function (err) {
                         error(err)
                     },
                 });
@@ -546,13 +492,16 @@
                 while (list.hasChildNodes()) {
                     list.removeChild(list.firstChild);
                 }
-                crear_elemento('a', 'inicio', '<i class="fas fa-home mr-1" ></i> Inicio', 'btn buttons-white inicio', '', "cargar_pagina('inicio')");
+                crear_elemento('a', 'inicio', '<i class="fas fa-home mr-1" ></i> Inicio', 'btn buttons-white inicio',
+                    '', "cargar_pagina('inicio')");
                 if (id.length > 2) {
                     $('#button_collapse').remove();
                     $('.boton-tutorial').remove();
                     $('#li_cart_comprar').remove();
                     precios = [];
-                    contenido.load('https://fastireport.000webhostapp.com/' + id + '.php', function (responseTxt, statusTxt, jqXHR) {
+                    contenido = $("#contenido");
+                    contenido.load('https://fastireport.000webhostapp.com/' + id + '.php', function (responseTxt,
+                        statusTxt, jqXHR) {
                         if (statusTxt == "success") {
                             $(".editar-api").removeClass('editar-api');
                             cambiar_idioma_index();
@@ -575,6 +524,7 @@
             }
         }
         var pagina_premium = '';
+
         function check_premium(data) {
             try {
                 if (data.estado == 'error') {
@@ -587,6 +537,7 @@
                 error(error_ex);
             }
         }
+
         function checkCookie() {
             try {
                 var cookieEnabled = navigator.cookieEnabled;
@@ -599,6 +550,7 @@
                 error(error_ex);
             }
         }
+
         function showCookieFail() {
             mensaje('error', error_texto, sin_cookies);
         }
