@@ -517,7 +517,8 @@
                     });
                 } else {
                     cargar_pagina('inicio');
-                    $('#li').remove();
+                    ejecutado = false;
+                    buscar_Privilejios();
                 }
             } catch (error_ex) {
                 $('#Id_pagina').html('');
