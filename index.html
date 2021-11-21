@@ -256,7 +256,6 @@
                     function crear_Menu_Usuario(data) {
                         try {
                             $('#li').remove();
-                            data_usuario = data;
                             $('#1_nav_li').addClass('d-none');
                             crear_elemento('li', 'li', "<a class='nav-link dropdown-toggle text-white'  href='#' id=" +
                                 data.usuario +
@@ -283,7 +282,7 @@
 
                     function cambiar(data) {
                         try {
-                            if (ejecutado == false && data.cantidad > 0) {
+                            if (data.cantidad > 0) {
                                 crear_Menu_Usuario(data);
                             }
                         } catch (error_ex) {
@@ -519,8 +518,8 @@
                 } else {
                     cargar_pagina('inicio');
                     setTimeout(() => {
-                        crear_Menu_Usuario(data_usuario);
-                    }, 2500);
+                        cambiar_idioma_index();
+                    }, 600);
                 }
             } catch (error_ex) {
                 $('#Id_pagina').html('');
