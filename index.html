@@ -324,7 +324,6 @@
     </div>
 
     <main id="contenido"></main>
-    <a onclick="cambiar_idioma_index()" class="btn btn-info pb-5 mb-5">Prueba</a>
     <div class="d-none" id="contenido_index_agregar"></div>
     <script>
         var cargando = true;
@@ -495,6 +494,9 @@
                 }
                 crear_elemento('a', 'inicio', '<i class="fas fa-home mr-1" ></i> Inicio', 'btn buttons-white inicio',
                     '', "cargar_pagina('inicio')");
+                    setTimeout(() => {
+                        cambiar_idioma_index();
+                    }, 600);
                 if (id.length > 2) {
                     $('#button_collapse').remove();
                     $('.boton-tutorial').remove();
@@ -518,9 +520,7 @@
                     });
                 } else {
                     cargar_pagina('inicio');
-                    setTimeout(() => {
-                        cambiar_idioma_index();
-                    }, 600);
+            
                 }
             } catch (error_ex) {
                 $('#Id_pagina').html('');
