@@ -562,15 +562,7 @@
 
         try {
             $(document).ready(function () {
-                setTimeout(() => {
-                    if (getCookie('idioma') != '') {
-                        cambiar_idioma_index();
-                    } else {
-                        if (ejecutado == false) {
-                            buscar_Privilejios();
-                        }
-                    }
-                }, 2500);
+                cambiar_idioma_index();
                 var resizeDelay = 200;
                 var doResize = true;
                 var resizer = function () {
