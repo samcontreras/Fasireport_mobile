@@ -88,7 +88,6 @@
                     var nav = $('nav');
                     var win = $(window);
                     var ejecutado = false;
-                    var data_usuario = [];
                     var pagina_cargar = '';
                     var sin_internet = '';
                     var sin_cookies = '';
@@ -494,9 +493,7 @@
                 }
                 crear_elemento('a', 'inicio', '<i class="fas fa-home mr-1" ></i> Inicio', 'btn buttons-white inicio',
                     '', "cargar_pagina('inicio')");
-                    setTimeout(() => {
-                        cambiar_idioma_index();
-                    }, 600);
+               
                 if (id.length > 2) {
                     $('#button_collapse').remove();
                     $('.boton-tutorial').remove();
@@ -520,7 +517,7 @@
                     });
                 } else {
                     cargar_pagina('inicio');
-            
+                    $('#li').remove();
                 }
             } catch (error_ex) {
                 $('#Id_pagina').html('');
