@@ -88,6 +88,7 @@
                     var nav = $('nav');
                     var win = $(window);
                     var ejecutado = false;
+                    var data_usuario = [];
                     var pagina_cargar = '';
                     var sin_internet = '';
                     var sin_cookies = '';
@@ -255,6 +256,7 @@
                     function crear_Menu_Usuario(data) {
                         try {
                             $('#li').remove();
+                            data_usuario = data;
                             $('#1_nav_li').addClass('d-none');
                             crear_elemento('li', 'li', "<a class='nav-link dropdown-toggle text-white'  href='#' id=" +
                                 data.usuario +
@@ -420,7 +422,7 @@
                 var errorCallback = function () {
 
                 }
-                // Asking permission to the user
+
                 permissions.requestPermission(
                     permissions.READ_EXTERNAL_STORAGE,
                     function (status) {
@@ -516,6 +518,9 @@
                     });
                 } else {
                     cargar_pagina('inicio');
+                    setTimeout(() => {
+                        crear_Menu_Usuario(data_usuario);
+                    }, 2500);
                 }
             } catch (error_ex) {
                 $('#Id_pagina').html('');
