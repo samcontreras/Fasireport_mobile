@@ -313,7 +313,8 @@
         </div>
     </nav>
 
-    <div class="card-footer row navbar navbar-expand-sm mb-4 mt-4 ml-4 mr-4 toolbar HORIZONTAL_SCROLL_NAV" id="toolbar_index">
+    <div class="card-footer row navbar navbar-expand-sm mb-4 mt-4 ml-4 mr-4 toolbar HORIZONTAL_SCROLL_NAV"
+        id="toolbar_index">
         <h1 class="text-white h2" id="titulo_h1"> Inicio </h1>
         <div class="d-none" id="toolbar_botones">
             <a class="ml-3 btn buttons-white inicio" onclick="cargar_pagina('inicio')" id="Inicio"> <i
@@ -493,7 +494,7 @@
                 }
                 crear_elemento('a', 'inicio', '<i class="fas fa-home mr-1" ></i> Inicio', 'btn buttons-white inicio',
                     '', "cargar_pagina('inicio')");
-               
+
                 if (id.length > 2) {
                     $('#button_collapse').remove();
                     $('.boton-tutorial').remove();
@@ -561,9 +562,15 @@
 
         try {
             $(document).ready(function () {
-                if (ejecutado == false) {
-                    buscar_Privilejios();
-                }
+                setTimeout(() => {
+                    if (getCookie('idioma') != '') {
+                        cambiar_idioma_index();
+                    } else {
+                        if (ejecutado == false) {
+                            buscar_Privilejios();
+                        }
+                    }
+                }, 2500);
                 var resizeDelay = 200;
                 var doResize = true;
                 var resizer = function () {
