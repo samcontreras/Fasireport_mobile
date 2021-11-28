@@ -116,9 +116,13 @@
 
                     function cambiar_idioma_index() {
                         try {
+                            var idioma = getCookie('idioma');
+                            if(idioma == ''){
+                                idioma = 'es';
+                            }
                             $.ajax({
                                 type: "GET",
-                                url: "https://fastireport.000webhostapp.com/panel_usuarios/get_palabras_nav.php",
+                                url: "https://fastireport.000webhostapp.com/panel_usuarios/get_palabras_nav.php?cookie_get=" + idioma,
                                 success: function (data) {
                                     if (data.estado == 'success') {
                                         $('.inicio').html('<i class="fas fa-home"></i>' + data.palabras
@@ -141,6 +145,8 @@
                                             .Politicas_de_privacidad);
                                         cargar_funcion_salir();
                                         buscar_Privilejios();
+                                    } else {
+                                        error('sin_idioma_set_get');
                                     }
                                 }
                             });
@@ -467,6 +473,8 @@
                 error(error_ex);
             }
         }
+
+        mensaje('info',window.navigator.onLine,window.navigator.onLine);
 
         function cargar_pagina(id) {
             try {
