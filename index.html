@@ -117,12 +117,13 @@
                     function cambiar_idioma_index() {
                         try {
                             var idioma = getCookie('idioma');
-                            if(idioma == ''){
+                            if (idioma == '') {
                                 idioma = 'es';
                             }
                             $.ajax({
                                 type: "GET",
-                                url: "https://fastireport.000webhostapp.com/panel_usuarios/get_palabras_nav.php?cookie_get=" + idioma,
+                                url: "https://fastireport.000webhostapp.com/panel_usuarios/get_palabras_nav.php?cookie_get=" +
+                                    idioma,
                                 success: function (data) {
                                     if (data.estado == 'success') {
                                         $('.inicio').html('<i class="fas fa-home"></i>' + data.palabras
@@ -133,6 +134,9 @@
                                             .palabras.quienes_somos);
                                         $('#piercing').html('<i class="fas fa-users"></i>' + data.palabras
                                             .piercing);
+                                        $('#panel_usuarios/Login').html(
+                                            '<i class="fas fa-sign-in-alt"></i> ' + data.iniciar_session
+                                            );
                                         $('#idioma_link_do').html('<i class="fas fa-users"></i>' + data
                                             .palabras.idioma);
                                         $('#es').html('<i class="fas fa-globe"></i>' + data.palabras.es);
@@ -474,7 +478,7 @@
             }
         }
 
-        mensaje('info',window.navigator.onLine,window.navigator.onLine);
+        mensaje('info', window.navigator.onLine, window.navigator.onLine);
 
         function cargar_pagina(id) {
             try {
