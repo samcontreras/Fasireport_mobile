@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv=”Content-Type” content=”text/html; charset=ISO-8859-1″ />
     <meta name="keywords" content="reportes,español,ingles,redes sociales, social media">
-    <meta name="author" content="Gonzalo Hernan Alvarez, Matias Ortiz, Carlos Riveiros y Samuel Contreras">
+    <meta name="author" content="Gonzalo Alvarez, Matias Ortiz, Carlos Riveros y Samuel Contreras">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/estilos.css">
     <link rel="shortcut icon" href="https://fastireport.000webhostapp.com/imagenes/icono.ico">
@@ -46,15 +46,13 @@
     <div id="Id_pagina" class="d-none"></div>
 
     <nav class="navbar navbar-expand-lg navbar-dark nav_color_transparencia" id="nav">
-        <img src="https://fastireport.000webhostapp.com/imagenes/logo.png" alt="Logo" class="img-fluid logo_empresa"
-            id="Logo_empresa" onclick="mostrar_nav()">
+        <img src="https://fastireport.000webhostapp.com/imagenes/logo.png" alt="Logo" class="img-fluid logo_empresa" id="Logo_empresa" onclick="mostrar_nav()">
 
-        <button id="nav_button" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="">
+        <button id="nav_button" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse hide" id="navbarNavDropdown">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav" id="ul_nav">
                 <li id='0_nav_li' class="nav-item">
                     <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('inicio')" id="Inicio"> <i
@@ -70,7 +68,7 @@
                 </li>
                 <li id='3_nav_li' class="nav-item">
                     <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('piercing')" id="piercing">
-                        <i class="fas fa-cart-plus"></i>Precios por mes</a>
+                        <i class="fas fa-cart-plus"></i>Piercing</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" id="idioma_link_do" data-toggle="dropdown">
@@ -87,10 +85,16 @@
                     var ul_nav = $('#ul_nav');
                     var nav = $('nav');
                     var win = $(window);
+                    var nav_button = $('#nav_button');
                     var ejecutado = false;
                     var pagina_cargar = '';
                     var sin_internet = '';
                     var sin_cookies = '';
+
+                    
+                    function closeDropdown() {
+                        nav_button.click();
+                    }
 
                     function mensaje(clase, titulo, mensaje, tiempo = 8500) {
                         Lobibox.notify(clase, {
@@ -159,7 +163,7 @@
                         }
                     }
 
-                    function error(error) {
+                    function error(error_texto) {
                         HoldOn.close();
                         nav.removeClass('z_index_menor');
                         mensaje('error', error_texto, error_texto);
@@ -183,7 +187,7 @@
                         }
                     }
 
-                    var nav_button = $('#nav_button');
+                 
                     nav_button.click(function (evento) {
                         try {
                             evento.preventDefault();
@@ -198,7 +202,7 @@
                     $('.nav_item').on('click', function () {
                         try {
                             if (win.width() <= 1100) {
-                                nav_button.click();
+                              closeDropdown();
                             }
                         } catch (error_ex) {
                             error(error_ex);
@@ -284,6 +288,7 @@
                                     "</a>", 'nav-item', '', '', 'drop_login');
                             }
                             ejecutado = true;
+                            dropdown_mobile.append(li);
                         } catch (error_ex) {
                             error(error_ex);
                         }
@@ -420,18 +425,15 @@
         };
         var contenido = $("#contenido");
 
-
         let permissions = cordova.plugins.permissions
         permissions.checkPermission(permissions.READ_EXTERNAL_STORAGE, checkPermissionCallback, null)
 
-        // Checking for permissions
         function checkPermissionCallback(status) {
             if (!status.hasPermission) {
 
                 var errorCallback = function () {
 
                 }
-
                 permissions.requestPermission(
                     permissions.READ_EXTERNAL_STORAGE,
                     function (status) {
@@ -441,18 +443,6 @@
                     },
                     errorCallback)
             }
-        }
-
-        document.addEventListener('deviceready', onDeviceReady);
-
-        function onDeviceReady() {
-            var success = function (status) {
-                alert('Message: ' + status);
-            }
-            var error = function (status) {
-                alert('Error: ' + status);
-            }
-            window.cache.clear(success, error);
         }
 
         var titulo_h1 = $('#titulo_h1');
@@ -478,8 +468,6 @@
             }
         }
 
-        mensaje('info', window.navigator.onLine, window.navigator.onLine);
-
         function cargar_pagina(id) {
             try {
                 var id_pagina = $('#Id_pagina');
@@ -504,7 +492,7 @@
                 while (list.hasChildNodes()) {
                     list.removeChild(list.firstChild);
                 }
-                crear_elemento('a', 'inicio', '<i class="fas fa-home mr-1" ></i> Inicio', 'btn buttons-white inicio',
+                crear_elemento('a', 'inicio', '<i class="fas fa-home mr-1" ></i> Inicio', 'btn buttons-white inicio mr-3',
                     '', "cargar_pagina('inicio')");
 
                 if (id.length > 2) {
@@ -523,6 +511,7 @@
                             } else {
                                 $("#toolbar_botones").addClass('d-none');
                             }
+                            closeDropdown();
                         } else {
                             error('');
                         }
