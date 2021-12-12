@@ -474,7 +474,7 @@
                     url: 'https://fastireport.000webhostapp.com/privilejios.php?pagina=' + id_pagina.html(),
                     success: function (data) {
                         if (data.estado == 'error') {
-                            mensaje(data.estado, data.titulo, data.mensaje);
+                            //mensaje(data.estado, data.titulo, data.mensaje);
                             timeout_location_index(2500);
                         } else {
                             titulo_h1 = $('#titulo_h1');
