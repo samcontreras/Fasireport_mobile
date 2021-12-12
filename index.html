@@ -510,6 +510,7 @@
                             } else {
                                 $("#toolbar_botones").addClass('d-none');
                             }
+                            cargado_inicio_mobile = false;
                             closeDropdown();
                             cargado_inicio_mobile = true;
                         }
@@ -625,7 +626,6 @@
         try {
             cargar_pagina('inicio');
             cambiar_idioma_index();
-            
             $("#Remove_inicio").remove();
         } catch (error_ex) {
             error(error_ex);
