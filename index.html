@@ -113,7 +113,7 @@
 
                     function timeout_location_index(tiempo) {
                         setTimeout(() => {
-                            window.location = '<?php echo Config::$ruta; ?>index.php';
+                            window.location = 'https://fastireport.000webhostapp.com/index.php';
                         }, tiempo);
                     }
 
@@ -216,9 +216,7 @@
                             $('#status').html('');
                             mensaje(data.estado, data.titulo, data.mensaje);
                             if (data.estado == 'success') {
-                                setTimeout(() => {
-                                    window.location = 'https://fastireport.000webhostapp.com/index.php';
-                                }, 2500);
+                                timeout_location_index(2500);
                             }
                         } catch (error_ex) {
                             error(error_ex);
@@ -238,6 +236,7 @@
                                     },
                                     error: function (err) {
                                         buscar_Privilejios();
+                                        error(err.mensaje);
                                     },
                                 });
                             }
@@ -449,6 +448,7 @@
                 responseTxt, statusTxt, jqXHR) {
                 if (statusTxt != "success") {
                     error(statusTxt);
+                    timeout_location_index(2500);
                 }
             });
         }
@@ -475,13 +475,15 @@
                     success: function (data) {
                         if (data.estado == 'error') {
                             mensaje(data.estado, data.titulo, data.mensaje);
+                            timeout_location_index(2500);
                         } else {
                             titulo_h1 = $('#titulo_h1');
                             titulo_h1.css('textTransform', 'capitalize').html(data.pagina);
                         };
                     },
                     error: function (err) {
-                        error(err)
+                        error(err.message);
+                        timeout_location_index(2500);
                     },
                 });
                 $('#ocultar_boton_card').click()
