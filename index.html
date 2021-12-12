@@ -32,6 +32,7 @@
 
     <script type="text/javascript" src="https://fastireport.000webhostapp.com/js/lobibox.min.js"></script>
     <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/lobibox.min.css">
+    <link rel="stylesheet" href="estilos.css">
 
     <script type="text/javascript" src="https://fastireport.000webhostapp.com/js/HoldOn.min.js"></script>
     <link rel="stylesheet" href="https://fastireport.000webhostapp.com/css/HoldOn.min.css">
@@ -41,10 +42,8 @@
 
     <title> FASIReport ( Informe de información rápido y seguro ) </title>
 </head>
-
 <body class="fondo" id="body">
     <div id="Id_pagina" class="d-none"></div>
-
     <nav class="navbar navbar-expand-lg navbar-dark nav_color_transparencia" id="nav">
         <img src="https://fastireport.000webhostapp.com/imagenes/logo.png" alt="Logo" class="img-fluid logo_empresa" id="Logo_empresa" onclick="mostrar_nav()">
 
@@ -53,33 +52,32 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <a class="cerrar_drop_btn" onClick="closeDropdown();" id="cerrar_dropdown">
+                <i class="far fa-window-close"></i>
+            </a>
+
             <ul class="navbar-nav" id="ul_nav">
-                <li id='0_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('inicio')" id="Inicio"> <i
-                            class="fas fa-home"></i>Inicio</a>
-                </li>
-                <li id='1_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('panel_usuarios/Login')"
-                        id='panel_usuarios-Login'> <i class="fas fa-sign-in-alt"></i>Iniciar sesion</a>
-                </li>
-                <li id='2_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('quienes_somos')"
-                        id="quienes_somos"> <i class="fas fa-users"></i>Quienes somos</a>
-                </li>
-                <li id='3_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index" onclick="cargar_pagina('piercing')" id="piercing">
-                        <i class="fas fa-cart-plus"></i>Piercing</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" id="idioma_link_do" data-toggle="dropdown">
-                        <i class="fas fa-globe"></i><span class="ml-1">Idioma</span></a>
-                    <div class="dropdown-menu nav_color menu_idioma">
-                        <a class="nav-link item text-white" onclick="cargar_pagina('es')" id="es"> <i
-                                class=" mr-1 fas fa-globe"></i>Español</a>
-                        <a class="nav-link item text-white" onclick="cargar_pagina('en')" id="en"> <i
-                                class=" mr-1 fas fa-globe"></i>Ingles</a>
-                    </div>
-                </li>
+                                        <li id='0_nav_li' class="nav-item">
+                            <a class="nav-link item text-white navbar-index nav_item" onclick="cargar_pagina('inicio')" id="inicio"> <i class="fas fa-home"></i> <span>Inicio</span> </a>
+                        </li>
+                                            <li id='1_nav_li' class="nav-item">
+                            <a class="nav-link item text-white navbar-index nav_item" onclick="cargar_pagina('panel_usuarios/Login')" id="panel_usuarios-Login"> <i class="fas fa-sign-in-alt"></i> <span>Iniciar sesion</span> </a>
+                        </li>
+                                            <li id='2_nav_li' class="nav-item">
+                            <a class="nav-link item text-white navbar-index nav_item" onclick="cargar_pagina('quienes_somos')" id="quienes_somos"> <i class="fas fa-users"></i> <span>Quienes somos</span> </a>
+                        </li>
+                                            <li id='3_nav_li' class="nav-item">
+                            <a class="nav-link item text-white navbar-index nav_item" onclick="cargar_pagina('piercing')" id="piercing"> <i class="fas fa-cart-plus"></i> <span>Precios por mes</span> </a>
+                        </li>
+                                            <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" id="idioma_link_do" data-toggle="dropdown">
+                                <i class="fas fa-globe"></i> <span class="ml-1"> Idioma </span>
+                            </a>
+                            <ul class="dropdown-menu nav_color menu_idioma dropdown_ajustar_derecha">
+                                                                    <a class="nav-link item text-white nav_item ml-4" onclick="cargar_pagina('es')" id="es"> <i class=" mr-1 fas fa-globe"></i>Español</a>
+                                                                    <a class="nav-link item text-white nav_item ml-4" onclick="cargar_pagina('en')" id="en"> <i class=" mr-1 fas fa-globe"></i>Ingles</a>
+                                                            </ul>
+                        </li>
                 <script>
                     var dropdown_mobile = $('#navbarNavDropdown');
                     var ul_nav = $('#ul_nav');
@@ -90,12 +88,13 @@
                     var pagina_cargar = '';
                     var sin_internet = '';
                     var sin_cookies = '';
-
+                    var cargado_inicio_mobile = false;
                     
                     function closeDropdown() {
-                        nav_button.click();
+                        if(cargado_inicio_mobile == true){
+                            nav_button.click();
+                        }
                     }
-
                     function mensaje(clase, titulo, mensaje, tiempo = 8500) {
                         Lobibox.notify(clase, {
                             title: titulo,
@@ -165,6 +164,7 @@
 
                     function error(error_texto) {
                         HoldOn.close();
+                        console.log(error_texto);
                         nav.removeClass('z_index_menor');
                         mensaje('error', error_texto, error_texto);
                     }
@@ -237,7 +237,7 @@
                                         cambiar(data);
                                     },
                                     error: function (err) {
-                                        error(err)
+                                        buscar_Privilejios();
                                     },
                                 });
                             }
@@ -430,10 +430,7 @@
 
         function checkPermissionCallback(status) {
             if (!status.hasPermission) {
-
-                var errorCallback = function () {
-
-                }
+                var errorCallback = function () {}
                 permissions.requestPermission(
                     permissions.READ_EXTERNAL_STORAGE,
                     function (status) {
@@ -512,8 +509,7 @@
                                 $("#toolbar_botones").addClass('d-none');
                             }
                             closeDropdown();
-                        } else {
-                            error('');
+                            cargado_inicio_mobile = true;
                         }
                         id_pagina.html('');
                     });
@@ -569,7 +565,6 @@
                 var resizer = function () {
                     if (doResize) {
                         var li = $('#li');
-
                         var dropdown_menu_div = $('.dropdown-menu');
                         if (win.width() < 2200) {
                             ul_nav.append(li);
@@ -628,6 +623,7 @@
         try {
             cargar_pagina('inicio');
             cambiar_idioma_index();
+            
             $("#Remove_inicio").remove();
         } catch (error_ex) {
             error(error_ex);
