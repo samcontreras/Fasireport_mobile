@@ -87,8 +87,9 @@
                     var ejecutado = false;
                     var pagina_cargar = '';
                     var sin_internet = '';
-					var check_idioma_mobile = true;
                     var sin_cookies = '';
+					var check_idioma_mobile = true;
+                    var idioma_js = '';
                     var cargado_inicio_mobile = false;
                     
                     function closeDropdown() {
@@ -475,7 +476,7 @@
                     url: 'https://fastireport.000webhostapp.com/privilejios.php?pagina=' + id_pagina.html(),
                     success: function (data) {
                         if (data.estado == 'error') {
-                            //mensaje(data.estado, data.titulo, data.mensaje);
+                            mensaje(data.estado, data.titulo, data.mensaje);
                             timeout_location_index(2500);
                         } else {
                             titulo_h1 = $('#titulo_h1');
