@@ -139,7 +139,7 @@
 
                     function timeout_location_index(tiempo) {
                         setTimeout(() => {
-                            window.location = 'https://fastireport.000webhostapp.com/index.php';
+                            cargar_pagina('inicio');
                         }, tiempo);
                     }
 
@@ -189,8 +189,9 @@
                         }
                     }
 
-                    function error(error_texto) {
+                    function error(error_ex) {
                         HoldOn.close();
+                        console.log(error_ex);
                         nav.removeClass('z_index_menor');
                         mensaje('error', error_texto, error_texto);
                     }
@@ -213,13 +214,11 @@
                         }
                     }
 
-
                     nav_button.click(function (evento) {
                         try {
                             evento.preventDefault();
                             dropdown_mobile.slideToggle('.slow');
                             dropdown_mobile.toggleClass('mobile');
-
                         } catch (error_ex) {
                             error(error_ex);
                         }
@@ -227,9 +226,7 @@
 
                     $('.nav_item').on('click', function () {
                         try {
-                            if (win.width() <= 1100) {
-                                closeDropdown();
-                            }
+                            closeDropdown();
                         } catch (error_ex) {
                             error(error_ex);
                         }
@@ -248,7 +245,6 @@
                             error(error_ex);
                         }
                     }
-
 
                     function buscar_Privilejios() {
                         $('#falta_cantidad').remove();
@@ -473,7 +469,6 @@
             $('#contenido_index_agregar').load('https://fastireport.000webhostapp.com/agregar_al_index.php', function (
                 responseTxt, statusTxt, jqXHR) {
                 if (statusTxt != "success") {
-                    error(statusTxt);
                     timeout_location_index(2500);
                 }
             });
@@ -525,6 +520,7 @@
                     $('#button_collapse').remove();
                     $('.boton-tutorial').remove();
                     $('#li_cart_comprar').remove();
+                    closeDropdown();
                     precios = [];
                     contenido = $("#contenido");
                     contenido.load('https://fastireport.000webhostapp.com/' + id + '.php', function (responseTxt,
@@ -537,7 +533,6 @@
                             } else {
                                 $("#toolbar_botones").addClass('d-none');
                             }
-                            cargado_inicio_mobile = false;
                             closeDropdown();
                             cargado_inicio_mobile = true;
                         }
@@ -651,6 +646,7 @@
     </script>
     <script id="Remove_inicio">
         try {
+            cargado_inicio_mobile = false;
             cargar_pagina('inicio');
             cambiar_idioma_index();
             $("#Remove_inicio").remove();
