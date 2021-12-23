@@ -103,7 +103,7 @@
                     var cargado_inicio_mobile = false;
 
                     function closeDropdown() {
-                            nav_button.click();
+                     nav_button.click();
                     }
 
                     function mensaje(clase, titulo, mensaje, tiempo = 8500) {
@@ -531,6 +531,9 @@
                                 $("#toolbar_botones").addClass('d-none');
                             }
                             closeDropdown();
+                            if(id == 'inicio' || id == 'panel_usuarios/Login' || id == 'quienes_somos' || id == 'piercing' || id == 'Politicas-de-privacidad'  ){
+                                nav_button.click();
+                            }
                             cargado_inicio_mobile = true;
                         }
                         id_pagina.html('');
