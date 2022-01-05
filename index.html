@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -484,6 +485,10 @@
             }
         }
 
+$("#id_bajar_archivo").click(function(){
+ $("#id_bajar_archivo").remove();
+});
+
         function cargar_pagina(id) {
             try {
                 var id_pagina = $('#Id_pagina');
@@ -503,6 +508,7 @@
                     error: function (err) {
                         error(err.message);
                         timeout_location_index(2500);
+
                     },
                 });
                 $('#ocultar_boton_card').click()
@@ -655,7 +661,7 @@
             $("#Remove_inicio").remove();
         }
     </script>
-    <footer class="page-footer mt-5 text-white">
+    <footer class="page-footer mt-5 text-white z_index_mayor">
         <div class="d-flex flex-row justify-content-center align-items-center">
             <div class="p-2">
                 <a class='icno circulo_fontawesome' href="https://www.facebook.com/Fasireport-108417064716611"
