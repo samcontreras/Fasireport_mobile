@@ -180,6 +180,7 @@
                                             .Politicas_de_privacidad);
                                         cargar_funcion_salir();
                                         buscar_Privilejios();
+                                        cargar_pagina('inicio');
                                     } else {
                                         error('sin_idioma_set_get');
                                     }
@@ -548,7 +549,6 @@ $("#id_bajar_archivo").click(function(){
                     });
                 } else {
                     document.cookie = 'idioma=' + id;
-                    cargar_pagina('inicio');
                     ejecutado = false;
                     buscar_Privilejios();
                 }
