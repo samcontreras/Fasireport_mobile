@@ -545,6 +545,7 @@ $("#id_bajar_archivo").click(function(){
                         id_pagina.html('');
                     });
                 } else {
+                    document.cookie = 'idioma=' + id;
                     cargar_pagina('inicio');
                     ejecutado = false;
                     buscar_Privilejios();
