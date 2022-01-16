@@ -1,11 +1,15 @@
-      #navbarNavDropdown{
-                margin-top: -1em !important;
-            }
+      #navbarNavDropdown {
+          margin-top: -1em !important;
+      }
 
-            .cerrar_drop_btn {
-                top: 0.5em !important
-            }
+      .cerrar_drop_btn {
+          top: 0.5em !important
+      }
 
-#Card_13 {
-margin-bottom : 22em !important;
-   }
+      #Card_13 {
+          margin-bottom: 22em !important;
+      }
+
+      #ul_nav{
+        margin-top: 3.5em !important;
+      }
