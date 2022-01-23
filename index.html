@@ -180,9 +180,6 @@
                                             .Politicas_de_privacidad);
                                         cargar_funcion_salir();
                                         buscar_Privilejios();
-                                        if(getCookie('flag_idioma') == 1){
-                                            cargar_pagina('inicio');
-                                        }
                                     } else {
                                         error('sin_idioma_set_get');
                                     }
@@ -256,7 +253,7 @@
                             if (ejecutado == false) {
                                 $.ajax({
                                     type: 'GET',
-                                    url: 'https://fastireport.000webhostapp.com/privilejios.php?buscar=true',
+                                    url: 'https://fastireport.000webhostapp.com/privilejios.php?buscar=true&idioma=' + getCookie('idioma'),
                                     success: function (data) {
                                         cambiar(data);
                                     },
@@ -500,7 +497,7 @@ $("#id_bajar_archivo").click(function(){
                 id_pagina.html(id);
                 $.ajax({
                     type: 'GET',
-                    url: 'https://fastireport.000webhostapp.com/privilejios.php?pagina=' + id_pagina.html(),
+                    url: 'https://fastireport.000webhostapp.com/privilejios.php?pagina=' + id_pagina.html() + '&idioma=' + getCookie('idioma'),
                     success: function (data) {
                         if (data.estado == 'error') {
                             mensaje(data.estado, data.titulo, data.mensaje);
@@ -552,7 +549,8 @@ $("#id_bajar_archivo").click(function(){
                 } else {
                     document.cookie = 'idioma=' + id;
                     ejecutado = false;
-                   document.cookie = 'flag_idioma=1';
+                    buscar_Privilejios();
+                   cargar_pagina('inicio');
                 }
             } catch (error_ex) {
                 $('#Id_pagina').html('');
@@ -658,8 +656,8 @@ $("#id_bajar_archivo").click(function(){
     <script id="Remove_inicio">
         try {
             cargado_inicio_mobile = false;
-            cargar_pagina('inicio');
             cambiar_idioma_index();
+            cargar_pagina('inicio');
             $("#Remove_inicio").remove();
         } catch (error_ex) {
             error(error_ex);
