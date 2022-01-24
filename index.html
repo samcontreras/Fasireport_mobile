@@ -104,7 +104,7 @@
                     var cargado_inicio_mobile = false;
 
                     function closeDropdown() {
-                     nav_button.click();
+                        nav_button.click();
                     }
 
                     function mensaje(clase, titulo, mensaje, tiempo = 8500) {
@@ -487,17 +487,21 @@
             }
         }
 
-$("#id_bajar_archivo").click(function(){
- $("#id_bajar_archivo").remove();
-});
+        $("#id_bajar_archivo").click(function () {
+            $("#id_bajar_archivo").remove();
+        });
 
         function cargar_pagina(id) {
             try {
                 var id_pagina = $('#Id_pagina');
                 id_pagina.html(id);
+                if(id.length == 2){
+                    document.cookie = 'idioma=' +  id;
+                }
                 $.ajax({
                     type: 'GET',
-                    url: 'https://fastireport.000webhostapp.com/privilejios.php?pagina=' + id_pagina.html() + '&idioma=' + getCookie('idioma'),
+                    url: 'https://fastireport.000webhostapp.com/privilejios.php?pagina=' + id_pagina.html() +
+                        '&idioma=' + getCookie('idioma'),
                     success: function (data) {
                         if (data.estado == 'error') {
                             mensaje(data.estado, data.titulo, data.mensaje);
@@ -539,7 +543,8 @@ $("#id_bajar_archivo").click(function(){
                                 $("#toolbar_botones").addClass('d-none');
                             }
                             closeDropdown();
-                            if(id == 'inicio' || id == 'panel_usuarios/Login' || id == 'quienes_somos' || id == 'piercing' || id == 'Politicas-de-privacidad'  ){
+                            if (id == 'inicio' || id == 'panel_usuarios/Login' || id == 'quienes_somos' || id ==
+                                'piercing' || id == 'Politicas-de-privacidad') {
                                 nav_button.click();
                             }
                             cargado_inicio_mobile = true;
@@ -547,14 +552,9 @@ $("#id_bajar_archivo").click(function(){
                         id_pagina.html('');
                     });
                 } else {
-<<<<<<< HEAD
-                    document.cookie = 'idioma=' + id;
-=======
                     cargar_pagina('inicio');
->>>>>>> parent of c594710 (Cambios)
                     ejecutado = false;
                     buscar_Privilejios();
-                   cargar_pagina('inicio');
                 }
             } catch (error_ex) {
                 $('#Id_pagina').html('');

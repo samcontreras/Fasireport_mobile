@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-      #navbarNavDropdown {
-          margin-top: -1em !important;
-      }
-=======
-      #navbarNavDropdown{
+
+ #navbarNavDropdown{
                 margin-top: -2em !important;
             }
->>>>>>> parent of c594710 (Cambios)
+
 
       .cerrar_drop_btn {
           top: 0.5em !important
