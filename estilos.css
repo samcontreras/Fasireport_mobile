@@ -1,17 +1,25 @@
 
- #navbarNavDropdown{
-                margin-top: -2em !important;
-            }
+#navbarNavDropdown {
+    margin-top: -2em !important;
+}
+.cerrar_drop_btn {
+    top: 0.5em !important
+}
 
+#Card_13 {
+    margin-bottom: 22em !important;
+}
 
-      .cerrar_drop_btn {
-          top: 0.5em !important
-      }
+#ul_nav {
+    margin-top: 3.5em !important;
+}
 
-      #Card_13 {
-          margin-bottom: 22em !important;
-      }
+#cerrar_dropdown {
+    margin-top: 1em;
+    cursor: pointer;
+    margin-left: 0.8em;
+}
 
-      #ul_nav{
-        margin-top: 3.5em !important;
-      }
+.lobibox-notify {
+z-index: 999999999999 !important;
+}

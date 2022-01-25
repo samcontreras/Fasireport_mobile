@@ -102,6 +102,7 @@
                     var check_idioma_mobile = true;
                     var idioma_js = '';
                     var cargado_inicio_mobile = false;
+                    var footer = [];
 
                     function closeDropdown() {
                         nav_button.click();
@@ -121,7 +122,14 @@
                             iconSource: 'fontAwesome',
                             icon: true,
                         });
+                        footer.removeClass('z_index_mayor');
                     }
+
+                    setInterval(() => {
+                        if ($('.lobibox-notify').length == 0) {
+                            footer.addClass('z_index_mayor');
+                        }
+                    }, 1500);
 
                     function limpiar_script_tags_html(texto) {
                         var resultado = '';
@@ -253,7 +261,8 @@
                             if (ejecutado == false) {
                                 $.ajax({
                                     type: 'GET',
-                                    url: 'https://fastireport.000webhostapp.com/privilejios.php?buscar=true&idioma=' + getCookie('idioma'),
+                                    url: 'https://fastireport.000webhostapp.com/privilejios.php?buscar=true&idioma=' +
+                                        getCookie('idioma'),
                                     success: function (data) {
                                         cambiar(data);
                                     },
@@ -271,15 +280,21 @@
                     function getCookie(cname) {
                         var name = cname + "=";
                         var resultado = '';
-                        var ca = document.cookie.split(';');
-                        for (var i = 0; i < ca.length; i++) {
-                            var c = ca[i];
-                            while (c.charAt(0) == ' ') {
-                                c = c.substring(1);
+                        try {
+                            if (checkCookie() == true) {
+                                var ca = document.cookie.split(';');
+                                for (var i = 0; i < ca.length; i++) {
+                                    var c = ca[i];
+                                    while (c.charAt(0) == ' ') {
+                                        c = c.substring(1);
+                                    }
+                                    if (c.indexOf(name) == 0) {
+                                        resultado = c.substring(name.length, c.length);
+                                    }
+                                }
                             }
-                            if (c.indexOf(name) == 0) {
-                                resultado = c.substring(name.length, c.length);
-                            }
+                        } catch (error_ex) {
+                            error(error_ex);
                         }
                         return resultado;
                     }
@@ -487,16 +502,12 @@
             }
         }
 
-        $("#id_bajar_archivo").click(function () {
-            $("#id_bajar_archivo").remove();
-        });
-
         function cargar_pagina(id) {
             try {
                 var id_pagina = $('#Id_pagina');
                 id_pagina.html(id);
-                if(id.length == 2){
-                    document.cookie = 'idioma=' +  id;
+                if (id.length == 2) {
+                    document.cookie = 'idioma=' + id;
                 }
                 $.ajax({
                     type: 'GET',
@@ -512,12 +523,11 @@
                         };
                     },
                     error: function (err) {
-                        error(err.message);
                         timeout_location_index(2500);
 
                     },
                 });
-                $('#ocultar_boton_card').click()
+                $('#ocultar_boton_card').click();
                 var list = document.getElementById("toolbar_botones");
                 while (list.hasChildNodes()) {
                     list.removeChild(list.firstChild);
@@ -546,6 +556,9 @@
                             if (id == 'inicio' || id == 'panel_usuarios/Login' || id == 'quienes_somos' || id ==
                                 'piercing' || id == 'Politicas-de-privacidad') {
                                 nav_button.click();
+                            }
+                            if(dropdown_mobile.hasClass('mobile')){
+                                closeDropdown();
                             }
                             cargado_inicio_mobile = true;
                         }
@@ -590,6 +603,12 @@
         }
 
         function showCookieFail() {
+            if (error_texto == '') {
+                error_texto = 'Ocurrio un error';
+            }
+            if (sin_cookies == '') {
+                sin_cookies = 'Las cookies estan desactivadas, el sitio web las necesita para su buen funcionamiento';
+            }
             mensaje('error', error_texto, sin_cookies);
         }
 
@@ -659,10 +678,13 @@
     </script>
     <script id="Remove_inicio">
         try {
-            cargado_inicio_mobile = false;
-            cambiar_idioma_index();
-            cargar_pagina('inicio');
-            $("#Remove_inicio").remove();
+            $(document).ready(function () {
+                cargado_inicio_mobile = false;
+                cambiar_idioma_index();
+                cargar_pagina('inicio');
+                $("#Remove_inicio").remove();
+                footer = $('footer');
+            });
         } catch (error_ex) {
             error(error_ex);
             $("#Remove_inicio").remove();
