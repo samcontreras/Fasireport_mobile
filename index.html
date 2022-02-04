@@ -191,6 +191,11 @@
                                     } else {
                                         error('sin_idioma_set_get');
                                     }
+                                },
+                                error: function (err) {
+                                    error_call_back_index(err.mensaje);
+                                    timeout_location_index(2500);
+
                                 }
                             });
                         } catch (error_ex) {
@@ -203,6 +208,10 @@
                         console.log(error_ex);
                         nav.removeClass('z_index_menor');
                         mensaje('error', error_texto, error_texto);
+                    }
+
+                    function error_call_back_index(err) {
+                        error(err);
                     }
 
                     function mostrar_nav() {
@@ -268,7 +277,7 @@
                                     },
                                     error: function (err) {
                                         buscar_Privilejios();
-                                        error(err.mensaje);
+                                        error_call_back_index(err.mensaje);
                                     },
                                 });
                             }
@@ -523,6 +532,7 @@
                         };
                     },
                     error: function (err) {
+                        error_call_back_index(err.mensaje);
                         timeout_location_index(2500);
 
                     },
@@ -557,7 +567,7 @@
                                 'piercing' || id == 'Politicas-de-privacidad') {
                                 nav_button.click();
                             }
-                            if(dropdown_mobile.hasClass('mobile')){
+                            if (dropdown_mobile.hasClass('mobile')) {
                                 closeDropdown();
                             }
                             cargado_inicio_mobile = true;
