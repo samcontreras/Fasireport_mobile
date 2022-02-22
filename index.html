@@ -309,7 +309,12 @@
                     }
 
                     function delete_cookie(name) {
-                        document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                        document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                    }
+
+                    if(getCookie('falta_privi') != ''){
+                        delete_cookie('falta_privi');
+                        mensaje('error',"<?php echo Config::$palabras[Config::$lenguaje]['permisos_insuficientes'];?>","<?php echo Config::$palabras[Config::$lenguaje]['permisos_insuficientes'];?>");
                     }
 
                     function crear_Menu_Usuario(data) {
