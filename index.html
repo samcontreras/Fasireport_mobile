@@ -79,8 +79,9 @@
                         id="piercing"> <i class="fas fa-cart-plus"></i> <span>Precios por mes</span> </a>
                 </li>
                 <li id='5_nav_li' class="nav-item">
-                    <a class="nav-link item text-white navbar-index nav_item" onclick="cargar_pagina('Contacto/formulario')"
-                        id="Contacto-formulario"> <i class="fas fa-cart-plus"></i> <span>Contacto</span> </a>
+                    <a class="nav-link item text-white navbar-index nav_item"
+                        onclick="cargar_pagina('Contacto/formulario')" id="Contacto-formulario"> <i
+                            class="fas fa-cart-plus"></i> <span>Contacto</span> </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" id="idioma_link_do" data-toggle="dropdown">
@@ -176,8 +177,8 @@
                                             .palabras.quienes_somos);
                                         $('#piercing').html('<i class="fas fa-users"></i>' + data.palabras
                                             .piercing);
-                                        $('#Contacto-formulario').html('<i class="fas fa-globe"></i>' + data.palabras
-                                            .contacto);
+                                        $('#Contacto-formulario').html('<i class="fas fa-globe"></i>' + data
+                                            .palabras.contacto);
                                         $('#panel_usuarios-Login').html(
                                             '<i class="fas fa-sign-in-alt"></i> ' + data.palabras
                                             .iniciar_session
@@ -292,6 +293,19 @@
                         }
                     }
 
+                    function checkCookie() {
+                        try {
+                            var cookieEnabled = navigator.cookieEnabled;
+                            if (!cookieEnabled) {
+                                document.cookie = "testcookie";
+                                cookieEnabled = document.cookie.indexOf("testcookie") != -1;
+                            }
+                            return cookieEnabled || showCookieFail();
+                        } catch (error_ex) {
+                            error(error_ex);
+                        }
+                    }
+
                     function getCookie(cname) {
                         var name = cname + "=";
                         var resultado = '';
@@ -315,12 +329,13 @@
                     }
 
                     function delete_cookie(name) {
-                        document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                        document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
                     }
 
-                    if(getCookie('falta_privi') != ''){
+                    if (getCookie('falta_privi') != '') {
                         delete_cookie('falta_privi');
-                        mensaje('error',"<?php echo Config::$palabras[Config::$lenguaje]['permisos_insuficientes'];?>","<?php echo Config::$palabras[Config::$lenguaje]['permisos_insuficientes'];?>");
+                        mensaje('error', "<?php echo Config::$palabras[Config::$lenguaje]['permisos_insuficientes'];?>",
+                            "<?php echo Config::$palabras[Config::$lenguaje]['permisos_insuficientes'];?>");
                     }
 
                     function crear_Menu_Usuario(data) {
@@ -610,18 +625,7 @@
             }
         }
 
-        function checkCookie() {
-            try {
-                var cookieEnabled = navigator.cookieEnabled;
-                if (!cookieEnabled) {
-                    document.cookie = "testcookie";
-                    cookieEnabled = document.cookie.indexOf("testcookie") != -1;
-                }
-                return cookieEnabled || showCookieFail();
-            } catch (error_ex) {
-                error(error_ex);
-            }
-        }
+
 
         function showCookieFail() {
             if (error_texto == '') {
@@ -736,6 +740,8 @@
                 <a href="mailto:fasireport@gmail.com" target="_blank" class="nav-link item text-white navbar-index"> <i
                         class="far fa-envelope"></i> fasireport@gmail.com </a>
             </li>
+            <li> <a href="tel:+11555005500" target="_blank" class="nav-link item text-white navbar-index"> <i
+                        class="fas fa-phone"></i> 5550-0550 </a></li>
             <li id='politicas_privacidad_nav_li' class="nav-item">
                 <a id="politicas_privacidad_boton" onclick="cargar_pagina('Politicas-de-privacidad')" target="_blank"
                     class="nav-link item text-white navbar-index"> <i class="fas fa-user-lock"></i> Politicas de
